@@ -1,12 +1,12 @@
-import _ from 'lodash';
+import * as paper from 'paper';
+import HexGrid from './HexGrid';
 
-function component() {
-  const element = document.createElement('div');
+paper.setup('canvas')
 
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-  return element;
+var settings = {
+  start: new paper.Point(200, 200),
+  boardSize: 7,
+  hexSize: 50
 }
 
-document.body.appendChild(component());
+var grid = new HexGrid(settings);
