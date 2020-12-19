@@ -1,13 +1,12 @@
 import { PointText, Path } from 'paper';
 
-
 export default class Hexagon {
   constructor(centerPoint, coordinates, radius) {
       this.coordinates = coordinates;
       this.center = centerPoint;
       this.path = new Path.RegularPolygon(centerPoint, 6, radius);
       this.path.strokeColor = 'black';
-      this.path.fillColor = 'red';
+      this.path.fillColor = 'blue';
       this.path.rotate(30);
 
       // Add text

@@ -1,7 +1,6 @@
 import { Point } from 'paper';
 import Hexagon from './Hexagon';
 
-
 export default class HexGrid {
     constructor(settings) {
         this.start = settings.start;
