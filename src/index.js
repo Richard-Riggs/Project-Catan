@@ -1,7 +1,7 @@
 import * as paper from 'paper';
 import HexGrid from './HexGrid';
 
-paper.setup('canvas')
+paper.setup('canvas');
 
 var settings = {
   start: new paper.Point(200, 200),

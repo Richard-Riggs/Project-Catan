@@ -1,5 +1,5 @@
 import { Point } from 'paper';
-import Hexagon from './Hexagon';
+import Tile from './Tile';
 
 export default class HexGrid {
     constructor(settings) {
@@ -24,9 +24,9 @@ export default class HexGrid {
                     this.start.x + displacementX,
                     this.start.y + displacementY
                 );
-                col.push(new Hexagon(hexStart, {x: i, y: j}, this.radius));
+                col.push(new Tile(hexStart, [i, j], this.radius));
             }
-            this.grid.push();
+            this.grid.push(col);
             if (i + 1 < (this.size / 2)) {
                 colHeight++;
             } else {
