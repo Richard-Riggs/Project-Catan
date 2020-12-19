@@ -5,7 +5,7 @@ import tileData from './tileData';
 paper.setup('canvas');
 
 var settings = {
-  start: new paper.Point(200, 200),
+  start: new paper.Point(100, 100),
   boardSize: 7,
   hexSize: 50
 }
