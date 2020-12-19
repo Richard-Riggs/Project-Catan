@@ -34,4 +34,11 @@ export default class HexGrid {
             }
         }
     }
+
+    populateBoard(dataSet) {
+        for (const tileData of dataSet) {
+            const tile = this.grid[tileData.tile[0]][tileData.tile[1]];
+            tile.update(tileData.data);
+        }
+    }
 }

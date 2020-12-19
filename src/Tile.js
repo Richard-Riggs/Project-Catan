@@ -4,6 +4,8 @@ import Hexagon from "./Hexagon";
 
 export default class Tile {
     constructor(point, coordinates, radius) {
+        this.type = "";
+        this.rollVal = 0;
         this.center = point;
         this.radius = radius;
         this.coordinates = coordinates;
@@ -16,13 +18,13 @@ export default class Tile {
     initText() {
         this.text = new PointText({
             point: this.center,
-            content: `${this.coordinates[0]}-${this.coordinates[1]}`,
+            content: ``,
             fillColor: 'black',
             fontFamily: 'Tahoma',
             fontWeight: 'normal',
             fontSize: this.radius / 2,
             locked: true,
-            opacity: 0
+            opacity: 1
         });
         const displacementX = -(this.text.bounds.centerX - this.center.x);
         const displacementY = -(this.text.bounds.centerY - this.center.y);
@@ -35,12 +37,20 @@ export default class Tile {
     }
 
     handleMouseEnter() {
-        this.hex.path.tweenTo({fillColor: 'green'}, 100);
-        this.text.tweenTo({opacity: 1}, 100);
+        this.hex.path.tweenTo({opacity: 0.75}, 100);
+        this.text.tweenTo({opacity: 0.75}, 100);
     }
 
     handleMouseLeave() {
-        this.hex.path.tweenTo({fillColor: 'red'}, 100);
-        this.text.tweenTo({opacity: 0}, 100);
+        this.hex.path.tweenTo({opacity: 1}, 100);
+        this.text.tweenTo({opacity: 1}, 100);
+    }
+
+    update(data) {
+        for (const property in data) {
+            this[property] = data[property];
+        }
+        this.hex.setType(this.type);
+        this.text.content = this.rollVal;
     }
 }
