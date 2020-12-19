@@ -1,5 +1,6 @@
 import * as paper from 'paper';
 import HexGrid from './HexGrid';
+import tileData from './tileData';
 
 paper.setup('canvas');
 
@@ -10,3 +11,4 @@ var settings = {
 }
 
 var grid = new HexGrid(settings);
+grid.populateBoard(tileData);
