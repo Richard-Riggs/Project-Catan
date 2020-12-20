@@ -2,18 +2,28 @@ import { Point } from 'paper';
 import Tile from './Tile';
 
 export default class HexGrid {
+    /**
+     * Creates a HexGrid instance containing a multidimensional array of tiles.
+     * Settings can be passed in to customize the grid configuration.
+     * 
+     * @param {object} settings Object containing settings for the grid configuration.
+     */
     constructor(settings) {
-        this.start = settings.start;
-        this.radius = settings.hexSize;
-        this.size = settings.boardSize;
+        this.start = settings.start || new Point(100, 100);
+        this.radius = settings.hexSize || 50;
+        this.colNum = settings.colNum || 7;
+        this.minColHeight = settings.minColHeight || 3;
         this.grid = [];
         this.generateBoard();
     }
 
+    /**
+     * Generates a multidemsional array of tiles and saves to this.grid.
+     */
     generateBoard() {
-        var centerCol = Math.ceil(this.size / 2) - 1;
-        var colHeight = 3;
-        for (var i = 0; i < this.size; i++) {
+        var centerCol = Math.ceil(this.colNum / 2) - 1;
+        var colHeight = this.minColHeight;
+        for (var i = 0; i < this.colNum; i++) {
             var col = [];
             var distFromCenter = Math.abs(centerCol - i);
             var colDisplacement = (distFromCenter * (this.radius * (Math.sqrt(3) / 2)));
@@ -27,7 +37,7 @@ export default class HexGrid {
                 col.push(new Tile(hexStart, [i, j], this.radius));
             }
             this.grid.push(col);
-            if (i + 1 < (this.size / 2)) {
+            if (i + 1 < (this.colNum / 2)) {
                 colHeight++;
             } else {
                 colHeight--;
@@ -35,6 +45,10 @@ export default class HexGrid {
         }
     }
 
+    /**
+     * 
+     * @param {array} dataSet Array of data used to populate board tiles. 
+     */
     populateBoard(dataSet) {
         for (const tileData of dataSet) {
             const tile = this.grid[tileData.tile[0]][tileData.tile[1]];
