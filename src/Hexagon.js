@@ -1,4 +1,4 @@
-import { Path } from 'paper';
+import { Path, Point } from 'paper';
 
 export default class Hexagon {
     constructor(centerPoint, radius) {
@@ -15,19 +15,15 @@ export default class Hexagon {
         this.path.strokeColor = 'black';
         this.path.fillColor = 'red';
         this.path.rotate(30);
-        for (const segment of this.path.segments) {
-            if (segment.index === 0) {
-                const circle = new Path.Circle(segment.point, 15);
-                circle.fillColor = 'blue';
-                const line = new Path.Line(segment.point, segment.next.point);
-                line.strokeColor = 'orange';
-                line.strokeWidth = 5;
-            }
-        }
     }
 
     setType(type) {
         this.type = type;
         this.path.fillColor = this.colors[type];
+    }
+
+    getPoints() {
+        const points = this.path.segments.map(segment => new Point(segment.point));
+        return points;
     }
 }

@@ -4,12 +4,12 @@ import Hexagon from "./Hexagon";
 
 export default class Tile {
     constructor(point, coordinates, radius) {
+        this.id = `${coordinates[0]}-${coordinates[1]}-T`;
         this.type = "";
         this.rollVal = 0;
         this.center = point;
         this.radius = radius;
         this.coordinates = coordinates;
-        this.id = `${coordinates[0]}-${coordinates[1]}`;
         this.hex = new Hexagon(point, radius);
         this.initText();
         this.attachEventListeners();
