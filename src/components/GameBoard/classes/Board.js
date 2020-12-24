@@ -3,7 +3,7 @@ import VertexMap from './VertexMap';
 
 
 // Includes a tile grid and vertex map
-export default class GameBoard {
+export default class Board {
     constructor(settings, tileDataGenerator) {
         this.tileGrid = new TileGrid(settings);
         this.vertexMap = new VertexMap(this.tileGrid);
