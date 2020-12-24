@@ -1,14 +1,17 @@
-import * as paper from 'paper';
-import { generateTileData } from './tileData';
-import GameBoard from './GameBoard';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-paper.setup('canvas');
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-var settings = {
-    start: new paper.Point(100, 100),
-    colNum: 7,
-    minColHeight: 3,
-    hexSize: 50,
-}
-
-var gameBoard = new GameBoard(settings, generateTileData);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
