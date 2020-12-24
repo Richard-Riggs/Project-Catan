@@ -1,9 +1,9 @@
 import { Point } from 'paper';
 import Tile from './Tile';
 
-export default class HexGrid {
+export default class TileGrid {
     /**
-     * Creates a HexGrid instance containing a multidimensional array of tiles.
+     * Creates a TileGrid instance containing a multidimensional array of tiles.
      * Settings can be passed in to customize the grid configuration.
      * 
      * @param {object} settings Object containing settings for the grid configuration.
@@ -13,7 +13,7 @@ export default class HexGrid {
         this.radius = settings.hexSize || 50;
         this.colNum = settings.colNum || 7;
         this.minColHeight = settings.minColHeight || 3;
-        this.grid = [];
+        this.tiles = [];
         this.generateBoard();
     }
 
@@ -36,7 +36,7 @@ export default class HexGrid {
                 );
                 col.push(new Tile(hexStart, [i, j], this.radius));
             }
-            this.grid.push(col);
+            this.tiles.push(col);
             if (i + 1 < (this.colNum / 2)) {
                 colHeight++;
             } else {
@@ -51,7 +51,7 @@ export default class HexGrid {
      */
     populateBoard(dataSet) {
         for (const tileData of dataSet) {
-            const tile = this.grid[tileData.tile[0]][tileData.tile[1]];
+            const tile = this.tiles[tileData.tile[0]][tileData.tile[1]];
             tile.update(tileData.data);
         }
     }
