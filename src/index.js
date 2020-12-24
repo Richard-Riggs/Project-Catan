@@ -1,6 +1,6 @@
 import * as paper from 'paper';
-import HexGrid from './HexGrid';
 import { generateTileData } from './tileData';
+import GameBoard from './GameBoard';
 
 paper.setup('canvas');
 
@@ -11,6 +11,4 @@ var settings = {
     hexSize: 50,
 }
 
-var grid = new HexGrid(settings);
-var tileData = generateTileData(grid.grid);
-grid.populateBoard(tileData);
+var gameBoard = new GameBoard(settings, generateTileData);
