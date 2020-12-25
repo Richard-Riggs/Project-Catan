@@ -1,10 +1,9 @@
 import * as paper from 'paper';
 import { generateTileData } from './tileData';
 import Board from './Board';
-import { Color, Path, project, view } from 'paper';
+import { Path, view } from 'paper';
 
 export function initBoard() {
-    console.log('hello');
     paper.setup('canvas');
 
     var backGround = new Path.Rectangle({
