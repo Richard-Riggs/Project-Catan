@@ -1,4 +1,4 @@
-import Game from '../Game/Game';
+import Game from '../Game';
 import './App.css';
 
 export default function App() {

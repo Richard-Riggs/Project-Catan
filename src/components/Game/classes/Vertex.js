@@ -74,8 +74,6 @@ export default class Vertex {
 
     handleMouseDown() {
         this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.5) }, 100);
-        console.log(this.adjacentVertices);
-        console.log(this.adjacentTiles);
     }
 
     handleMouseUp() {

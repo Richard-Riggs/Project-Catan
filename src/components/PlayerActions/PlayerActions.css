@@ -1,0 +1,15 @@
+.PlayerActions {
+    border-radius: 1rem;
+    flex-grow: 1;
+    margin: 1rem 2rem 3rem 4rem;
+    background-color: #cfe0fc;
+    box-shadow:
+        0 0px 2.2px rgba(0, 0, 0, 0.031),
+        0 0px 5.3px rgba(0, 0, 0, 0.044),
+        0 0px 10px rgba(0, 0, 0, 0.055),
+        0 0px 17.9px rgba(0, 0, 0, 0.066),
+        0 0px 33.4px rgba(0, 0, 0, 0.079),
+        0 0px 80px rgba(0, 0, 0, 0.11)
+    ;
+
+}

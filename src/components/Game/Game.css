@@ -1,0 +1,15 @@
+.Game {
+    display: flex;
+}
+
+.Game__canvas-window {
+    width: 60vw;
+    height: 100vh;
+}
+
+.Game__player-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #4287f5;
+}
