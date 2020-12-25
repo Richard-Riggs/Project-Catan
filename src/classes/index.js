@@ -1,12 +1,11 @@
 import * as paper from 'paper';
-import { generateTileData } from './tileData';
-import Board from './Board';
+import GameSession from './GameSession';
 import { Path, view } from 'paper';
 
-export function initBoard() {
+export function initGame(playerData, setPlayerData) {
     paper.setup('canvas');
 
-    var backGround = new Path.Rectangle({
+    const backGround = new Path.Rectangle({
         point: [0, 0],
         size: [view.size.width, view.size.height]
     });
@@ -20,5 +19,13 @@ export function initBoard() {
         hexSize: 50,
     }
 
-    return new Board(settings, generateTileData);
+    setPlayerData({
+        ore: 1,
+        wheat: 1,
+        wood: 1,
+        brick: 2,
+        sheep: 4
+    });
+
+    return new GameSession(settings);
 }

@@ -1,17 +1,29 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { initBoard } from '../classes/index';
+import { initGame } from '../classes/index';
 
+/**
+ * Context for interfacing with the game session logic.
+ */
 export const GameSessionContext = createContext();
-
 export function GameSessionContextProvider({ children }) {
     const [ gameSession, setGameSession ] = useState(null);
+    const [ gameState, setGameState ] = useState({});
+    const [ playerData, setPlayerData ] = useState({});
 
-    useEffect(() => {
-        setGameSession(initBoard());
-    }, []);
+    /**
+     * Initialize the game session.
+     */
+    function initGameSession() {
+        if (gameSession === null) {
+            setGameSession(initGame(playerData, setPlayerData));
+        }
+    }
+
+    // Run initGameSession after children components render.
+    useEffect(initGameSession, [gameSession, playerData]);
 
     return (
-        <GameSessionContext.Provider>
+        <GameSessionContext.Provider value={{ playerData }}>
             { children }
         </GameSessionContext.Provider>
     );
