@@ -10,4 +10,12 @@ export default class GameSession {
         const tileData = generateTileData(this.tileGrid.tiles);
         this.tileGrid.populateBoard(tileData);
     }
+
+    updatePlayerDataState() {
+        // Call getDataState method on Player.js
+    }
+
+    updateGameSessionState() {
+        // Call getGameState method on this
+    }
 }

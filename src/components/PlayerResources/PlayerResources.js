@@ -5,7 +5,6 @@ import { GameSessionContext } from '../../contexts/GameSessionContext';
 
 export default function PlayerResources(props) {
     const { playerData } = useContext(GameSessionContext);
-    debugger;
     return (
         <div className="PlayerResources">
             <h1 className="PlayerResources__header">Player Resources</h1>
