@@ -8,9 +8,27 @@ export default class EventHandler {
     handleVertexClick(vertex) {
         switch (this.gameSession.mode) {
             case 'add_settlement':
-                vertex.piece = new Settlement(vertex.tileRadius / 4, vertex.center);
+                if (vertex.canAddPiece()) vertex.addSettlement();
                 break;
             default:
+                break;
+        }
+    }
+
+    handleVertexMouseEnter(vertex) {
+        switch (this.gameSession.mode) {
+            case 'add_settlement':
+                vertex.addHoverPiece();
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleVertexMouseLeave(vertex) {
+        switch (this.gameSession.mode) {
+            default:
+                vertex.removeHoverPiece();
                 break;
         }
     }

@@ -1,4 +1,5 @@
 import { Color, Path } from 'paper';
+import { Settlement } from './Pieces';
 
 export default class Vertex {
     constructor(point, coordinates, tileRadius, eventHandler) {
@@ -59,27 +60,31 @@ export default class Vertex {
 
     attachEventListeners() {
         this.clickBoundary.onClick = () => this.eventHandler.handleVertexClick(this);
-        // this.clickBoundary.onMouseEnter = this.handleMouseEnter.bind(this);
-        // this.clickBoundary.onMouseLeave = this.handleMouseLeave.bind(this);
-        // this.clickBoundary.onMouseDown = this.handleMouseDown.bind(this);
-        // this.clickBoundary.onMouseUp = this.handleMouseUp.bind(this);
+        this.clickBoundary.onMouseEnter = () => this.eventHandler.handleVertexMouseEnter(this);
+        this.clickBoundary.onMouseLeave = () => this.eventHandler.handleVertexMouseLeave(this);
     }
 
-    // handleMouseEnter() {
-    //     this.clickBoundary.opacity = 1;
-    //     this.clickBoundary.strokeColor = new Color(0, 0, 255, 1);
-    // }
+    canAddPiece() {
+        const validLocation = this.adjacentVertices.every(vert => !(vert.piece && vert.piece.built));
+        const noCurrentPiece = !(this.piece && this.piece.built);
+        return validLocation && noCurrentPiece;
+    }
 
-    // handleMouseLeave() {
-    //     this.clickBoundary.opacity = 0;
-    //     this.clickBoundary.strokeColor = new Color(0, 0, 255, 0.01);
-    // }
+    addSettlement() {
+        if (this.piece && !this.piece.built) this.piece.path.remove();
+        this.piece = new Settlement(this.tileRadius / 4, this.center);
+    }
 
-    // handleMouseDown() {
-    //     this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.5) }, 100);
-    // }
+    addHoverPiece() {
+        if (!this.piece && this.canAddPiece()) {
+            this.piece = new Settlement(this.tileRadius / 4, this.center, false);
+        }
+    }
 
-    // handleMouseUp() {
-    //     this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.1) }, 100);
-    // }
+    removeHoverPiece() {
+        if (this.piece && !this.piece.built) {
+            this.piece.path.remove();
+            this.piece = null;
+        }
+    }
 }
