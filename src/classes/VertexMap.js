@@ -1,8 +1,9 @@
 import Vertex from './Vertex';
 
 export default class VertexMap {
-    constructor(tileGrid) {
+    constructor(tileGrid, eventHandler) {
         this.vertices = [];
+        this.eventHandler = eventHandler;
         this.generateVertexMap(tileGrid);
         this.setupMapReferences(tileGrid);
     }
@@ -17,13 +18,13 @@ export default class VertexMap {
                 const tile = tileGrid.tiles[i][j];
                 const hexPoints = tile.hex.getPoints();
                 if (isLeftHalf) {
-                    if (j === 0) col.push(new Vertex(hexPoints[0], [this.vertices.length, col.length], tileRadius));
-                    col.push(new Vertex(hexPoints[5], [this.vertices.length, col.length], tileRadius));
-                    col.push(new Vertex(hexPoints[4], [this.vertices.length, col.length], tileRadius));
+                    if (j === 0) col.push(new Vertex(hexPoints[0], [this.vertices.length, col.length], tileRadius, this.eventHandler));
+                    col.push(new Vertex(hexPoints[5], [this.vertices.length, col.length], tileRadius, this.eventHandler));
+                    col.push(new Vertex(hexPoints[4], [this.vertices.length, col.length], tileRadius, this.eventHandler));
                 } else {
-                    if (j === 0) col.push(new Vertex(hexPoints[1], [this.vertices.length, col.length], tileRadius));
-                    col.push(new Vertex(hexPoints[2], [this.vertices.length, col.length], tileRadius));
-                    col.push(new Vertex(hexPoints[3], [this.vertices.length, col.length], tileRadius));
+                    if (j === 0) col.push(new Vertex(hexPoints[1], [this.vertices.length, col.length], tileRadius, this.eventHandler));
+                    col.push(new Vertex(hexPoints[2], [this.vertices.length, col.length], tileRadius, this.eventHandler));
+                    col.push(new Vertex(hexPoints[3], [this.vertices.length, col.length], tileRadius, this.eventHandler));
                 }
             }
             this.vertices.push(col);

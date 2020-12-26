@@ -1,12 +1,14 @@
 import { Color, Path } from 'paper';
 
 export default class Vertex {
-    constructor(point, coordinates, tileRadius) {
+    constructor(point, coordinates, tileRadius, eventHandler) {
         this.id = `${coordinates[0]}-${coordinates[1]}-V`;
+        this.piece = null;
         this.center = point;
         this.coordinates = coordinates;
         this.tileRadius = tileRadius;
         this.setClickBoundary(this.tileRadius * 0.6);
+        this.eventHandler = eventHandler;
     }
 
     setClickBoundary(circleRadius) {
@@ -56,27 +58,28 @@ export default class Vertex {
     }
 
     attachEventListeners() {
-        this.clickBoundary.onMouseEnter = this.handleMouseEnter.bind(this);
-        this.clickBoundary.onMouseLeave = this.handleMouseLeave.bind(this);
-        this.clickBoundary.onMouseDown = this.handleMouseDown.bind(this);
-        this.clickBoundary.onMouseUp = this.handleMouseUp.bind(this);
+        this.clickBoundary.onClick = () => this.eventHandler.handleVertexClick(this);
+        // this.clickBoundary.onMouseEnter = this.handleMouseEnter.bind(this);
+        // this.clickBoundary.onMouseLeave = this.handleMouseLeave.bind(this);
+        // this.clickBoundary.onMouseDown = this.handleMouseDown.bind(this);
+        // this.clickBoundary.onMouseUp = this.handleMouseUp.bind(this);
     }
 
-    handleMouseEnter() {
-        this.clickBoundary.opacity = 1;
-        this.clickBoundary.strokeColor = new Color(0, 0, 255, 1);
-    }
+    // handleMouseEnter() {
+    //     this.clickBoundary.opacity = 1;
+    //     this.clickBoundary.strokeColor = new Color(0, 0, 255, 1);
+    // }
 
-    handleMouseLeave() {
-        this.clickBoundary.opacity = 0;
-        this.clickBoundary.strokeColor = new Color(0, 0, 255, 0.01);
-    }
+    // handleMouseLeave() {
+    //     this.clickBoundary.opacity = 0;
+    //     this.clickBoundary.strokeColor = new Color(0, 0, 255, 0.01);
+    // }
 
-    handleMouseDown() {
-        this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.5) }, 100);
-    }
+    // handleMouseDown() {
+    //     this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.5) }, 100);
+    // }
 
-    handleMouseUp() {
-        this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.1) }, 100);
-    }
+    // handleMouseUp() {
+    //     this.clickBoundary.tweenTo({ fillColor: new Color(0, 0, 255, 0.1) }, 100);
+    // }
 }

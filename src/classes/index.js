@@ -2,7 +2,7 @@ import * as paper from 'paper';
 import GameSession from './GameSession';
 import { Path, view } from 'paper';
 
-export function initGame(playerData, setPlayerData) {
+export function initGame(playerData, stateSetters) {
     paper.setup('canvas');
 
     const backGround = new Path.Rectangle({
@@ -19,7 +19,7 @@ export function initGame(playerData, setPlayerData) {
         hexSize: 50,
     }
 
-    setPlayerData({
+    stateSetters.setPlayerData({
         ore: 1,
         wheat: 1,
         wood: 1,
@@ -27,5 +27,5 @@ export function initGame(playerData, setPlayerData) {
         sheep: 4
     });
 
-    return new GameSession(settings);
+    return new GameSession(settings, stateSetters);
 }

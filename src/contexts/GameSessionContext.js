@@ -15,15 +15,18 @@ export function GameSessionContextProvider({ children }) {
      */
     function initGameSession() {
         if (gameSession === null) {
-            setGameSession(initGame(playerData, setPlayerData));
+            const stateSetters = { setGameState, setPlayerData };
+            setGameSession(initGame(playerData, stateSetters));
         }
     }
 
     // Run initGameSession after children components render.
     useEffect(initGameSession, [gameSession, playerData]);
 
+    const setGameMode = (mode) => gameSession.setMode(mode);
+
     return (
-        <GameSessionContext.Provider value={{ playerData }}>
+        <GameSessionContext.Provider value={{ playerData, gameState, setGameMode }}>
             { children }
         </GameSessionContext.Provider>
     );

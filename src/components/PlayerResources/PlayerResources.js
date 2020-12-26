@@ -4,10 +4,10 @@ import ResourceItem from '../ResourceItem';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
 
 export default function PlayerResources(props) {
-    const { playerData } = useContext(GameSessionContext);
+    const { playerData, gameState } = useContext(GameSessionContext);
     return (
         <div className="PlayerResources">
-            <h1 className="PlayerResources__header">Player Resources</h1>
+            <h1 className="PlayerResources__header">Player Resources ({gameState.mode})</h1>
             <div className="PlayerResources__info-pane">
                 <div className="PlayerResources__column">
                     <ResourceItem name="Wood" count={ playerData.wood } />

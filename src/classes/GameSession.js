@@ -1,14 +1,26 @@
 import TileGrid from './TileGrid';
 import VertexMap from './VertexMap';
+import Player from './Player';
+import EventHandler from './EventHandler';
 import { generateTileData } from './tileData';
 
 // Includes a tile grid and vertex map
 export default class GameSession {
-    constructor(settings) {
+    constructor(settings, stateSetters) {
+        this.stateSetters = stateSetters;
+        this.eventHandler = new EventHandler(this);
         this.tileGrid = new TileGrid(settings);
-        this.vertexMap = new VertexMap(this.tileGrid);
+        this.vertexMap = new VertexMap(this.tileGrid, this.eventHandler);
         const tileData = generateTileData(this.tileGrid.tiles);
         this.tileGrid.populateBoard(tileData);
+        this.mode = "standby";
+        this.player = new Player('testUser');
+        this.updateGameSessionState();
+    }
+
+    setMode(mode) {
+        this.mode = mode;
+        this.updateGameSessionState();
     }
 
     updatePlayerDataState() {
@@ -16,6 +28,13 @@ export default class GameSession {
     }
 
     updateGameSessionState() {
-        // Call getGameState method on this
+        const gameState = {
+            mode: this.mode
+        }
+        this.stateSetters.setGameState(gameState);
     }
+
+
+    // vertexClick() {
+    // }
 }

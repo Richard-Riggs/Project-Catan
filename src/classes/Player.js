@@ -42,7 +42,9 @@ export default class Player{
         if(this.wood >= 1 && this.sheep >=1 && this.brick >= 1 && this.wheat >=1){
             return true;
         }
-        else {false;}
+        else {
+            return false;
+        }
     }
 
     buySettlement(){
@@ -53,11 +55,14 @@ export default class Player{
     }
 
     canBuyCity(){
-        if(this.ore >=3 && this.wheat >=2 ){
+        if (this.ore >=3 && this.wheat >=2 ){
             return true;
         }
-        else { false;}
+        else {
+            return false;
+        }
     }
+
     buyCity(){
         this.ore += -3;
         this.wheat += -2;

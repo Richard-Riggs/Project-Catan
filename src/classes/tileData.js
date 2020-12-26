@@ -12,7 +12,7 @@ export function generateTileData(grid) {
             tileData.push({
                 tile: [i, j],
                 data: {
-                    type:    types[Math.floor(Math.random() * 5)],
+                    type: types[Math.floor(Math.random() * 5)],
                     rollVal: Math.ceil(Math.random() * 11) + 1
                 }
             });
