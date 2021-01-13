@@ -1,18 +1,17 @@
 import * as paper from 'paper';
 import GameSession from './GameSession';
-import { Path, view } from 'paper';
 
-export function initGame(playerData, stateSetters) {
+export function initGame(stateSetters: StateSetters) {
     paper.setup('canvas');
 
-    const backGround = new Path.Rectangle({
+    const backGround = new paper.Path.Rectangle({
         point: [0, 0],
-        size: [view.size.width, view.size.height]
+        size: [paper.view.size.width, paper.view.size.height]
     });
     backGround.sendToBack();
-    backGround.fillColor = '#4287f5';
+    backGround.fillColor = new paper.Color('#4287f5');
 
-    var settings = {
+    const settings: GameSettings = {
         start: new paper.Point(150, 100),
         colNum: 7,
         minColHeight: 3,

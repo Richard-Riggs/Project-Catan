@@ -6,28 +6,28 @@ import { initGame } from '../classes/index';
  */
 export const GameSessionContext = createContext();
 export function GameSessionContextProvider({ children }) {
-    const [ gameSession, setGameSession ] = useState(null);
-    const [ gameState, setGameState ] = useState({});
-    const [ playerData, setPlayerData ] = useState({});
+	const [ gameSession, setGameSession ] = useState(null);
+	const [ gameState, setGameState ] = useState({});
+	const [ playerData, setPlayerData ] = useState({});
 
-    /**
+	/**
      * Initialize the game session.
      */
-    function initGameSession() {
-        if (gameSession === null) {
-            const stateSetters = { setGameState, setPlayerData };
-            setGameSession(initGame(playerData, stateSetters));
-        }
-    }
+	function initGameSession() {
+		if (gameSession === null) {
+			const stateSetters = { setGameState, setPlayerData };
+			setGameSession(initGame(stateSetters));
+		}
+	}
 
-    // Run initGameSession after children components render.
-    useEffect(initGameSession, [gameSession, playerData]);
+	// Run initGameSession after children components render.
+	useEffect(initGameSession, [ gameSession, playerData ]);
 
-    const setGameMode = (mode) => gameSession.setMode(mode);
+	const setGameMode = (mode) => gameSession.setMode(mode);
 
-    return (
-        <GameSessionContext.Provider value={{ playerData, gameState, setGameMode }}>
-            { children }
-        </GameSessionContext.Provider>
-    );
+	return (
+		<GameSessionContext.Provider value={{ playerData, gameState, setGameMode }}>
+			{children}
+		</GameSessionContext.Provider>
+	);
 }
