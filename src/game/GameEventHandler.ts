@@ -17,7 +17,7 @@ export default class GameEventHandler {
                 if (vertex.canAddPiece() && this.player.canBuySettlement()) {
                     this.player.buySettlement();
                     vertex.addSettlement();
-                    this.gameSession.updateStateWithMode('standby');
+                    this.gameSession.setMode('standby');
                 }
                 break;
             default:

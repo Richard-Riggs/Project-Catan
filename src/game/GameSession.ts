@@ -6,50 +6,60 @@ import { generateTileData } from './tileData';
 
 // Includes a tile grid and vertex map
 export default class GameSession {
-    stateSetters: StateSetters;
+    private _stateSetters: StateSetters;
+    private _mode: GameMode;
     player: Player;
-    mode: string;
     eventHandler: GameEventHandler;
     tileGrid: TileGrid;
     vertexMap: VertexMap;
 
     // TODO: interface for settings and stateSetters
     constructor(settings: GameSettings, stateSetters: StateSetters) {
-        this.stateSetters = stateSetters;
+        this._stateSetters = stateSetters;
         this.player = new Player('testUser');
         this.eventHandler = new GameEventHandler(this);
         this.tileGrid = new TileGrid(settings);
         this.vertexMap = new VertexMap(this.tileGrid, this.eventHandler);
         const tileData = generateTileData(this.tileGrid.tiles);
         this.tileGrid.populateBoard(tileData);
-        this.mode = 'standby';
-        this.updateGameSessionState();
+        this._mode = 'standby';
+        this.updateContextStates();
     }
 
-    setMode(mode: string) {
-        this.mode = mode;
-        this.updateGameSessionState();
-    }
+    get mode(): GameMode {
+        return this._mode
+    };
 
-    updateStateWithMode(mode: string) {
+    set mode(mode: GameMode) {
         this.setMode(mode);
+    }
+
+    setMode(mode: GameMode): void {
+        this._mode = mode;
+        this.updateContextStates();
+    }
+
+    /**
+     * Updates all GameSessionContext states using state setters.
+     * 
+     * @returns void
+     */
+    updateContextStates(): void {
+        this.updateGameSessionState();
         this.updatePlayerDataState();
     }
 
     updatePlayerDataState() {
         // Call getDataState method on Player.js
-        const playerData = this.player.getAllData();
-        debugger;
-        this.stateSetters.setPlayerData(playerData);
+        const playerData: PlayerData = this.player.getAllData();
+        this._stateSetters.setPlayerData(playerData);
     }
 
     updateGameSessionState() {
-        const gameState = {
+        const gameState: GameState = {
             mode: this.mode
         };
-        this.stateSetters.setGameState(gameState);
+        this._stateSetters.setGameState(gameState);
     }
 
-    // vertexClick() {
-    // }
 }

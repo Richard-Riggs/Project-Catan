@@ -43,7 +43,7 @@ export default class Vertex {
     setReferences(vertexMap: VertexMap, tileGrid: TileGrid) {
         this.setAdjacentVertices(vertexMap);
         this.setAdjacentTiles(tileGrid);
-        this.setClickBoundary(this.tileRadius / 2);
+        this.clickBoundary = this.setClickBoundary(this.tileRadius / 2);
         this.attachEventListeners();
     }
 

@@ -49,3 +49,28 @@ type GamePiece = Settlement;
 type HexPoints = [paper.Point, paper.Point, paper.Point, paper.Point, paper.Point, paper.Point];
 
 type GameMode = "add_settlement" | "standby";
+
+interface PlayerData {
+    name: string;
+	brick: number;
+	ore: number;
+	sheep: number;
+	wheat: number;
+	wood: number;
+	cities: number;
+	devCards: number;
+	roads: number;
+	settlements: number;
+    ships: number;
+    canBuySettlement: boolean;
+}
+
+interface GameSessionContextData {
+	playerData: PlayerData,
+	gameState: GameState,
+	setGameMode: (mode: GameMode) => void;
+}
+
+interface GameState {
+	mode: GameMode;
+}

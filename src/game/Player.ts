@@ -5,7 +5,7 @@ export default class Player {
     wheat: number;
     ore: number;
     brick: number;
-    devCards: Array<{}>;
+    devCards: number;
     roads: number;
     ships: number;
     settlements: number;
@@ -19,18 +19,18 @@ export default class Player {
         this.wheat = 1;
         this.ore = 1;
         this.brick = 1;
-        this.devCards = [];
-        this.roads = 15;
-        this.ships = 15;
-        this.settlements = 5;
-        this.cities = 3;
+        this.devCards = 1;
+        this.roads = 1;
+        this.ships = 1;
+        this.settlements = 1;
+        this.cities = 1;
     }
 
     get totalResources(): number {
         return this.wood + this.sheep + this.wheat + this.ore + this.brick;
     }
 
-    getAllData(): object {
+    getAllData(): PlayerData {
         return {
             name: this.name,
             wood: this.wood,
@@ -42,7 +42,8 @@ export default class Player {
             roads: this.roads,
             ships: this.ships,
             settlements: this.settlements,
-            cities: this.cities
+            cities: this.cities,
+            canBuySettlement: this.canBuySettlement()
         };
     }
 
