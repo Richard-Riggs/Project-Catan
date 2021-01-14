@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import './PlayerResources.css';
 import ResourceItem from '../ResourceItem';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
 
-export default function PlayerResources(props) {
-    const { playerData, gameState } = useContext(GameSessionContext);
+export default function PlayerResources() {
+    const gameContext = useContext(GameSessionContext);
+    if (!gameContext) return <div className="PlayerResources" />;
+    const { gameState, playerData } = gameContext;
     return (
         <div className="PlayerResources">
             <h1 className="PlayerResources__header">Player Resources ({gameState.mode})</h1>
@@ -17,11 +19,11 @@ export default function PlayerResources(props) {
                     <ResourceItem name="Sheep" count={playerData.sheep} />
                 </div>
                 <div className="PlayerResources__column">
-                    <ResourceItem name="Settlements" count={props.settlements} />
-                    <ResourceItem name="Cities" count={props.cities} />
-                    <ResourceItem name="Roads" count={props.roads} />
-                    <ResourceItem name="Ships" count={props.ships} />
-                    <ResourceItem name="Dev Cards" count={props.devCards} />
+                    <ResourceItem name="Settlements" count={playerData.settlements} />
+                    <ResourceItem name="Cities" count={playerData.cities} />
+                    <ResourceItem name="Roads" count={playerData.roads} />
+                    <ResourceItem name="Ships" count={playerData.ships} />
+                    <ResourceItem name="Dev Cards" count={playerData.devCards} />
                 </div>
             </div>
         </div>

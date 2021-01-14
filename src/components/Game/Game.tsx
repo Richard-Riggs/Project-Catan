@@ -1,4 +1,3 @@
-import React from 'react';
 import BoardCanvas from '../BoardCanvas';
 import PlayerActions from '../PlayerActions';
 import PlayerResources from '../PlayerResources';

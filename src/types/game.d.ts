@@ -14,8 +14,8 @@ interface StateSetter<T>{
 }
 
 interface StateSetters {
-    setPlayerData: StateSetter<{}>;
-    setGameState: StateSetter<{}>
+    setPlayerData: StateSetter<PlayerData>;
+    setGameState: StateSetter<GameState>
 }
 
 interface TileColors {
@@ -47,3 +47,5 @@ type TileGridUpdate = Array<TileDataPackage>;
 type GamePiece = Settlement;
 
 type HexPoints = [paper.Point, paper.Point, paper.Point, paper.Point, paper.Point, paper.Point];
+
+type GameMode = "add_settlement" | "standby";
