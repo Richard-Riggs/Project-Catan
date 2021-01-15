@@ -36,7 +36,8 @@ export default class Vertex {
             strokeColor: new paper.Color(0, 0, 255, 0.01),
             fillColor: new paper.Color(0, 0, 255, 0.01),
             radius: circleRadius,
-            opacity: 0.1
+            opacity: 0.1,
+            locked: true
         });
     }
 

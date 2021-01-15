@@ -36,9 +36,14 @@ export const GameSessionContextProvider: React.FC = ({ children }) => {
 		}
 	}
 
-	// Run initGameSession after children components render.
 	useEffect(initGameSession, [ gameSession, playerData ]);
 
+	/**
+	 * Update the mode in the GameSession, which updates the context's gameState.
+	 * 
+	 * @param {GameMode} mode New mode to set.
+	 * @returns {void}
+	 */
 	const setGameMode = (mode: GameMode) => gameSession && gameSession.setMode(mode);
 
 	return (

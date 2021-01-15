@@ -13,7 +13,6 @@ export default class GameSession {
     tileGrid: TileGrid;
     vertexMap: VertexMap;
 
-    // TODO: interface for settings and stateSetters
     constructor(settings: GameSettings, stateSetters: StateSetters) {
         this._stateSetters = stateSetters;
         this.player = new Player('testUser');
@@ -34,15 +33,22 @@ export default class GameSession {
         this.setMode(mode);
     }
 
+    /**
+     * Sets the game mode and updates GameSessionContext.
+     * 
+     * @param {GameMode} mode New mode to set.
+     * @returns {void}
+     */
     setMode(mode: GameMode): void {
         this._mode = mode;
+        this.updateBoardMode();
         this.updateContextStates();
     }
 
     /**
      * Updates all GameSessionContext states using state setters.
      * 
-     * @returns void
+     * @returns {void}
      */
     updateContextStates(): void {
         this.updateGameSessionState();
@@ -50,7 +56,6 @@ export default class GameSession {
     }
 
     updatePlayerDataState() {
-        // Call getDataState method on Player.js
         const playerData: PlayerData = this.player.getAllData();
         this._stateSetters.setPlayerData(playerData);
     }
@@ -60,6 +65,17 @@ export default class GameSession {
             mode: this.mode
         };
         this._stateSetters.setGameState(gameState);
+    }
+
+    updateBoardMode() {
+        switch(this._mode) {
+            case 'add_settlement':
+                this.vertexMap.enableVertexEvents();
+                break;
+            default:
+                this.vertexMap.disableVertexEvents();
+                break;
+        }
     }
 
 }

@@ -5,10 +5,12 @@ import Vertex from './Vertex';
 export default class VertexMap {
     vertices: VerticeArray;
     eventHandler: GameEventHandler;
+    locked: boolean;
 
     constructor(tileGrid: TileGrid, eventHandler: GameEventHandler) {
         this.eventHandler = eventHandler;
         this.vertices = this.generateVertexMap(tileGrid);
+        this.locked = true;
         this.setupMapReferences(tileGrid);
     }
 
@@ -51,6 +53,35 @@ export default class VertexMap {
             for (const vertex of vertexCol) {
                 vertex.setReferences(this, tileGrid);
             }
+        }
+    }
+
+    /**
+     * Unlocks the clickBoundary on each vertex, which enables user interaction.
+     */
+    enableVertexEvents(): void {
+        if (this.locked) {
+            for (const vertexCol of this.vertices) {
+                for (const vertex of vertexCol) {
+                    vertex.clickBoundary.locked = false;
+                }
+            }
+            this.locked = false;
+        }
+
+    }
+
+    /**
+     * Locks the clickBoundary on each vertex, which disables user interaction.
+     */
+    disableVertexEvents(): void {
+        if (!this.locked) {
+            for (const vertexCol of this.vertices) {
+                for (const vertex of vertexCol) {
+                    vertex.clickBoundary.locked = true;
+                }
+            }
+            this.locked = true;
         }
     }
 }

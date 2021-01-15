@@ -74,7 +74,7 @@ export default class Player {
     }
 
     canBuySettlement(): boolean {
-        return this.wood >= 1 && this.sheep >= 1 && this.brick >= 1 && this.wheat >= 1;
+        return this.wood >= 1 && this.sheep >= 1 && this.brick >= 1 && this.wheat >= 1 && this.settlements > 0;
     }
 
     buySettlement(): void {
@@ -82,6 +82,7 @@ export default class Player {
         this.wheat--;
         this.sheep--;
         this.brick--;
+        this.settlements--;
     }
 
     canBuyCity(): boolean {
