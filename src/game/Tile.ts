@@ -3,7 +3,7 @@ import Hexagon from "./Hexagon";
 
 
 export default class Tile {
-    id: string;
+    readonly id: string;
     type: keyof TileColors;
     rollVal: number;
     center: paper.Point;

@@ -1,26 +1,23 @@
-import TileGrid from './TileGrid';
-import VertexMap from './VertexMap';
 import Player from './Player';
 import GameEventHandler from './GameEventHandler';
-import { generateTileData } from './tileData';
+import GameBoard from './GameBoard';
 
-// Includes a tile grid and vertex map
+/**
+ * Top-level class for interfacing between the React GameSessionContext, the LiveSessionManager,
+ * and the GameBoard logic.
+ */
 export default class GameSession {
     private _stateSetters: StateSetters;
     private _mode: GameMode;
+    private _gameBoard: GameBoard;
     player: Player;
     eventHandler: GameEventHandler;
-    tileGrid: TileGrid;
-    vertexMap: VertexMap;
 
     constructor(settings: GameSettings, stateSetters: StateSetters) {
         this._stateSetters = stateSetters;
         this.player = new Player('testUser');
         this.eventHandler = new GameEventHandler(this);
-        this.tileGrid = new TileGrid(settings);
-        this.vertexMap = new VertexMap(this.tileGrid, this.eventHandler);
-        const tileData = generateTileData(this.tileGrid.tiles);
-        this.tileGrid.populateBoard(tileData);
+        this._gameBoard = new GameBoard(settings, this)
         this._mode = 'standby';
         this.updateContextStates();
     }
@@ -41,7 +38,7 @@ export default class GameSession {
      */
     setMode(mode: GameMode): void {
         this._mode = mode;
-        this.updateBoardMode();
+        this._gameBoard.updateBoardMode(mode);
         this.updateContextStates();
     }
 
@@ -65,17 +62,6 @@ export default class GameSession {
             mode: this.mode
         };
         this._stateSetters.setGameState(gameState);
-    }
-
-    updateBoardMode() {
-        switch(this._mode) {
-            case 'add_settlement':
-                this.vertexMap.enableVertexEvents();
-                break;
-            default:
-                this.vertexMap.disableVertexEvents();
-                break;
-        }
     }
 
 }

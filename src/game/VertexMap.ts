@@ -14,6 +14,7 @@ export default class VertexMap {
         this.setupMapReferences(tileGrid);
     }
 
+    //TODO: Refactor this method
     generateVertexMap(tileGrid: TileGrid): VerticeArray {
         let isLeftHalf = true;
         const vertexCols = [];
