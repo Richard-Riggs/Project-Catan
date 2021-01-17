@@ -1,31 +1,34 @@
 import { GameEvent } from '../types/game';
 import GameBoard from './GameBoard';
 import GameSession from './GameSession';
-import GameUpdater from './GameUpdater';
 import Player from './Player';
 import RoadPath from './RoadPath';
 import Vertex from './Vertex';
 
 export default class GameEventHandler {
     private _gameSession: GameSession;
-    private _gameUpdater: GameUpdater;
     private _player: Player;
 
-    constructor(gameSession: GameSession, gameUpdater: GameUpdater) {
+    constructor(gameSession: GameSession) {
         this._gameSession = gameSession;
-        this._gameUpdater = gameUpdater;
         this._player = gameSession.player;
     }
 
-    triggerGameEvent(event: GameEvent) {
+    triggerGameEvent(event: GameEvent, objectId: string = "") {
         switch (event) {
             case 'roll_dice':
                 const rollVal = GameBoard.rollDice();
-                this._gameUpdater.dispatchUpdateFromEvent({
+                this._gameSession.updater.dispatchUpdateFromEvent({
                     type: event,
                     value: rollVal
                 });
-
+                break;
+            default:
+                this._gameSession.updater.dispatchUpdateFromEvent({
+                    type: event,
+                    value: objectId
+                });
+                break;
         }
     }
 
@@ -33,9 +36,7 @@ export default class GameEventHandler {
         switch (this._gameSession.mode) { // TODO: Player mode? 
             case 'add_settlement':
                 if (vertex.canAddPiece() && this._player.canBuySettlement()) {
-                    vertex.addSettlement();
-                    this._player.buySettlement(vertex);
-                    this._gameSession.updater.setMode('standby');
+                    this.triggerGameEvent('add_settlement', vertex.id);
                 }
                 break;
             default:
@@ -82,9 +83,7 @@ export default class GameEventHandler {
         switch (this._gameSession.mode) {
             case 'add_road':
                 if (roadPath.canAddPiece() && this._player.canBuyRoad()) {
-                    this._player.buyRoad();
-                    roadPath.addRoadPiece();
-                    this._gameSession.updater.setMode('standby');
+                    this.triggerGameEvent('add_road', roadPath.id);
                 }
                 break;
             default:

@@ -53,4 +53,8 @@ export default class RoadPathSet {
             this.locked = true;
         }
     }
+
+    getRoadPathById(id: string): RoadPath | undefined {
+        return this.roads.find(r => r.id === id);
+    }
 }

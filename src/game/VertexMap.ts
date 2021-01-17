@@ -86,4 +86,8 @@ export default class VertexMap {
             this.locked = true;
         }
     }
+
+    getVertexById(id: string): Vertex | undefined {
+        return this.vertices.flat().find(v => v.id === id);
+    }
 }

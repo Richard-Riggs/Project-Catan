@@ -18,9 +18,9 @@ export default class GameSession {
 
     constructor(settings: GameSettings, stateSetters: StateSetters) {
         this.player = new Player('testUser');
-        this.updater = new GameUpdater(this, stateSetters);
-        this.eventHandler = new GameEventHandler(this, this.updater);
+        this.eventHandler = new GameEventHandler(this);
         this.gameBoard = new GameBoard(this, settings);
+        this.updater = new GameUpdater(this, stateSetters);
         this.lastRolled = 0;
         this.mode = 'standby';
         this.updater.setMode(this.mode);

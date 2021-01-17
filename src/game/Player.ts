@@ -1,4 +1,5 @@
 import { PlayerData } from "../types/game";
+import RoadPath from "./RoadPath";
 import Vertex from "./Vertex";
 
 export default class Player {
@@ -15,6 +16,7 @@ export default class Player {
     settlements: number;
     cities: number;
     builtSettlements: Array<Vertex>;
+    builtRoads: Array<RoadPath>;
 
     constructor(iName: string) {
         // TODO: add configurable default values
@@ -31,6 +33,7 @@ export default class Player {
         this.settlements = 3;
         this.cities = 3;
         this.builtSettlements = [];
+        this.builtRoads = [];
     }
 
     get totalResources(): number {
@@ -59,10 +62,11 @@ export default class Player {
         return this.wood >= 1 && this.ore >= 1 && this.roads > 0;
     }
 
-    buyRoad(): void {
+    buyRoad(road: RoadPath): void {
         this.wood--;
         this.ore--;
         this.roads--;
+        this.builtRoads.push(road);
     }
 
     canBuyShip(): boolean {

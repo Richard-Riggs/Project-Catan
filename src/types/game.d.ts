@@ -52,9 +52,9 @@ type HexPoints = [paper.Point, paper.Point, paper.Point, paper.Point, paper.Poin
 
 type GameMode = "add_settlement" | "add_road" | "standby";
 
-type GameEvent = "roll_dice" | "add_road";
+type GameEvent = "roll_dice" | "add_road" | "add_settlement";
 
-type EventUpdate = DiceRollUpdate | AddRoadUpdate;
+type EventUpdate = DiceRollUpdate | AddRoadUpdate | AddSettlmentUpdate;
 
 interface DiceRollUpdate {
     type: "roll_dice";
@@ -63,6 +63,11 @@ interface DiceRollUpdate {
 
 interface AddRoadUpdate {
     type: "add_road";
+    value: string;
+}
+
+interface AddSettlmentUpdate {
+    type: "add_settlement";
     value: string;
 }
 

@@ -1,4 +1,5 @@
 import { EventUpdate, GameMode, GameState, GameUpdate, PlayerData, StateSetters } from "../types/game";
+import GameBoard from "./GameBoard";
 import GameSession from "./GameSession";
 import Player from "./Player";
 
@@ -6,11 +7,13 @@ export default class GameUpdater {
     private _gameSession: GameSession;
     private _player: Player;
     private _stateSetters: StateSetters;
+    private _gameBoard: GameBoard;
 
     constructor(gameSession: GameSession, stateSetters: StateSetters) {
         this._gameSession = gameSession;
-        this._player = this._gameSession.player;
         this._stateSetters = stateSetters;
+        this._player = this._gameSession.player;
+        this._gameBoard = this._gameSession.gameBoard;
     }
 
     dispatchUpdate(update: GameUpdate) {
@@ -33,6 +36,22 @@ export default class GameUpdater {
                 this._gameSession.lastRolled = update.data.value;
                 this.updateUIContext();
                 break;
+            case 'add_settlement':
+                const vertex = this._gameBoard.vertexMap.getVertexById(update.data.value);
+                if (vertex) {
+                    vertex.addSettlement();
+                    this._player.buySettlement(vertex);
+                    this._gameSession.updater.setMode('standby');
+                }
+                break;
+            case 'add_road':
+                const road = this._gameBoard.roadPathSet.getRoadPathById(update.data.value);
+                if (road) {
+                    road.addRoadPiece();
+                    this._player.buyRoad(road);
+                    this._gameSession.updater.setMode('standby');
+                }
+                break;
             default:
                 break;
         }
@@ -46,7 +65,7 @@ export default class GameUpdater {
      */
     setMode(mode: GameMode): void {
         this._gameSession.mode = mode;
-        this._gameSession.gameBoard.updateBoardMode(mode);
+        this._gameSession.gameBoard.switchBoardMode(mode);
         this.updateUIContext();
     }
 
