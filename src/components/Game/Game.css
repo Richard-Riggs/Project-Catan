@@ -1,0 +1,15 @@
+.Game {
+    display: flex;
+}
+
+.Game__canvas-window {
+    min-width: 50vw;
+    height: 100vh;
+}
+
+.Game__player-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}

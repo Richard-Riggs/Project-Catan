@@ -1,26 +1,33 @@
-import { Point } from 'paper';
+import * as paper from 'paper';
 import Tile from './Tile';
 
-export default class HexGrid {
+type TileArray = Array<Array<Tile>>;
+
+export default class TileGrid {
+    tiles: TileArray;
+    start: paper.Point;
+    radius: number;
+    colNum: number;
+    minColHeight: number;
     /**
-     * Creates a HexGrid instance containing a multidimensional array of tiles.
+     * Creates a TileGrid instance containing a multidimensional array of tiles.
      * Settings can be passed in to customize the grid configuration.
      * 
-     * @param {object} settings Object containing settings for the grid configuration.
+     * @param {GameSettings} settings Object containing settings for the grid configuration.
      */
-    constructor(settings) {
-        this.start = settings.start || new Point(100, 100);
+    constructor(settings: GameSettings) {
+        this.start = settings.start || new paper.Point(100, 100);
         this.radius = settings.hexSize || 50;
         this.colNum = settings.colNum || 7;
         this.minColHeight = settings.minColHeight || 3;
-        this.grid = [];
-        this.generateBoard();
+        this.tiles = this.generateBoard();
     }
 
     /**
      * Generates a multidemsional array of tiles and saves to this.grid.
      */
-    generateBoard() {
+    generateBoard(): TileArray {
+        const tiles = [];
         var centerCol = Math.ceil(this.colNum / 2) - 1;
         var colHeight = this.minColHeight;
         for (var i = 0; i < this.colNum; i++) {
@@ -30,29 +37,35 @@ export default class HexGrid {
             for (var j = 0; j < colHeight; j++) {
                 var displacementX = this.radius * (i * 1.5);
                 var displacementY = (j * this.radius * (Math.sqrt(3))) + colDisplacement;
-                var hexStart = new Point(
+                var hexStart = new paper.Point(
                     this.start.x + displacementX,
                     this.start.y + displacementY
                 );
                 col.push(new Tile(hexStart, [i, j], this.radius));
             }
-            this.grid.push(col);
+            tiles.push(col);
             if (i + 1 < (this.colNum / 2)) {
                 colHeight++;
             } else {
                 colHeight--;
             }
         }
+        return tiles as TileArray;
     }
 
     /**
      * 
      * @param {array} dataSet Array of data used to populate board tiles. 
      */
-    populateBoard(dataSet) {
-        for (const tileData of dataSet) {
-            const tile = this.grid[tileData.tile[0]][tileData.tile[1]];
-            tile.update(tileData.data);
+    populateBoard(dataSet: TileGridUpdate) {
+        for (const tilePackage of dataSet) {
+            const col = this.tiles[tilePackage.tile[0]];
+            if (col !== undefined) {
+                const tile = col[tilePackage.tile[1]];
+                if (tile !== undefined) {
+                    tile.update(tilePackage.data);
+                }
+            }
         }
     }
 }

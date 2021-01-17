@@ -1,0 +1,10 @@
+.GameButton {
+    cursor: pointer;
+    border: 1px solid gray;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    font-weight: bold;
+    margin: 0.5rem;
+    user-select: none;
+}
