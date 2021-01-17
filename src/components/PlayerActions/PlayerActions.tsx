@@ -6,7 +6,7 @@ import { GameSessionContext } from '../../contexts/GameSessionContext';
 export default function PlayerActions() {
     const gameContext = useContext(GameSessionContext);
     if (!gameContext) return <div className="PlayerActions" />
-    const { setGameMode, playerData } = gameContext;
+    const { setGameMode, playerData, triggerEvent } = gameContext;
     return (
         <div className="PlayerActions">
             <h1>Player Actions</h1>
@@ -16,7 +16,7 @@ export default function PlayerActions() {
                 <GameButton name="Upgrade Settlement" enabled={true} onClick={() => {}} />
                 <GameButton name="Trade" enabled={true} onClick={() => {}} />
                 <GameButton name="Buy Development Card" enabled={true} onClick={() => {}} />
-                <GameButton name="Roll Dice" enabled={true} onClick={() => {}} />
+                <GameButton name="Roll Dice" enabled={true} onClick={() => triggerEvent('roll_dice')} />
             </div>
         </div>
     )

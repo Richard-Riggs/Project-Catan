@@ -1,3 +1,4 @@
+import { TileArray, TileGridUpdate, TileColors, Coordinates, TileData } from "../types/game";
 import Tile from "./Tile";
 
 /**

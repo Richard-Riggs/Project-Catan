@@ -4,6 +4,7 @@ import Tile from './Tile';
 import TileGrid from './TileGrid';
 import VertexMap from './VertexMap';
 import * as paper from 'paper';
+import { GamePiece, Coordinates } from '../types/game';
 
 
 export default class Vertex {

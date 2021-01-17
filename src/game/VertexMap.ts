@@ -1,3 +1,4 @@
+import { VerticeArray, HexPoints } from '../types/game';
 import GameEventHandler from './GameEventHandler';
 import TileGrid from './TileGrid';
 import Vertex from './Vertex';

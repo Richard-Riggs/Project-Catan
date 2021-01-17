@@ -4,6 +4,7 @@ import VertexMap from './VertexMap';
 import { generateTileData } from './tileData';
 import GameSession from './GameSession';
 import RoadPathSet from './RoadPathSet';
+import { GameMode, GameSettings } from '../types/game';
 
 export default class GameBoard {
     private _eventHandler: GameEventHandler;
@@ -11,8 +12,8 @@ export default class GameBoard {
     vertexMap: VertexMap;
     roadMap: RoadPathSet;
 
-    constructor(settings: GameSettings, gameSession: GameSession) {
-        this._eventHandler = new GameEventHandler(gameSession);
+    constructor(gameSession: GameSession, settings: GameSettings ) {
+        this._eventHandler = gameSession.eventHandler;
         this.tileGrid = new TileGrid(settings);
         const tileData = generateTileData(this.tileGrid.tiles);
         this.tileGrid.populateBoard(tileData);
@@ -35,6 +36,12 @@ export default class GameBoard {
                 this.roadMap.disableRoadPathEvents();
                 break;
         }
+    }
+
+    static rollDice(): number {
+        const roll1 = Math.floor(Math.random() * 6) + 1;
+        const roll2 = Math.floor(Math.random() * 6) + 1;
+        return roll1 + roll2;
     }
 
 }

@@ -1,4 +1,8 @@
+import { PlayerData } from "../types/game";
+import Vertex from "./Vertex";
+
 export default class Player {
+    id: string;
     name: string;
     wood: number;
     sheep: number;
@@ -10,10 +14,12 @@ export default class Player {
     ships: number;
     settlements: number;
     cities: number;
+    builtSettlements: Array<Vertex>;
 
     constructor(iName: string) {
         // TODO: add configurable default values
         this.name = iName;
+        this.id = this.name; // TODO: create unique id
         this.wood = 3;
         this.sheep = 3;
         this.wheat = 3;
@@ -24,6 +30,7 @@ export default class Player {
         this.ships = 3;
         this.settlements = 3;
         this.cities = 3;
+        this.builtSettlements = [];
     }
 
     get totalResources(): number {
@@ -75,12 +82,13 @@ export default class Player {
         return this.wood >= 1 && this.sheep >= 1 && this.brick >= 1 && this.wheat >= 1 && this.settlements > 0;
     }
 
-    buySettlement(): void {
+    buySettlement(vertex: Vertex): void {
         this.wood--;
         this.wheat--;
         this.sheep--;
         this.brick--;
         this.settlements--;
+        this.builtSettlements.push(vertex);
     }
 
     canBuyCity(): boolean {
@@ -95,4 +103,17 @@ export default class Player {
         this.ore += -3;
         this.wheat += -2;
     }
+
+    getResourcesFromDiceRoll(rollVal: number): void {
+        for (const vertex of this.builtSettlements) {
+            if (!vertex.adjacentTiles) continue;
+            for (const tile of vertex.adjacentTiles) {
+                if (tile.rollVal === rollVal) {
+                    const type = tile.type;
+                    this[type]++;
+                }
+            }
+        }
+    }
+
 }

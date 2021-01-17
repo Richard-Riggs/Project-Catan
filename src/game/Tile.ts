@@ -1,4 +1,5 @@
 import * as paper from 'paper';
+import { TileColors, Coordinates, TileData } from '../types/game';
 import Hexagon from "./Hexagon";
 
 
