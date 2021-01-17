@@ -43,16 +43,13 @@ export default class Player {
             ships: this.ships,
             settlements: this.settlements,
             cities: this.cities,
-            canBuySettlement: this.canBuySettlement()
+            canBuySettlement: this.canBuySettlement(),
+            canBuyRoad: this.canBuyRoad()
         };
     }
 
     canBuyRoad(): boolean {
-        if (this.wood >= 1 && this.ore >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.wood >= 1 && this.ore >= 1 && this.roads > 0;
     }
 
     buyRoad(): void {

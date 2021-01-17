@@ -84,8 +84,8 @@ export default class Vertex {
 
     canAddPiece() {
         const validLocation = this.adjacentVertices && this.adjacentVertices.every(vert => !(vert.piece && vert.piece.built));
-        const noCurrentPiece = !(this.piece && this.piece.built);
-        return validLocation && noCurrentPiece;
+        const noBuiltPiece = !(this.piece && this.piece.built);
+        return validLocation && noBuiltPiece;
     }
 
     addSettlement() {
@@ -101,7 +101,7 @@ export default class Vertex {
 
     removeHoverPiece() {
         if (this.piece && !this.piece.built) {
-            this.piece.path.remove();
+            this.piece.remove();
             this.piece = null;
         }
     }

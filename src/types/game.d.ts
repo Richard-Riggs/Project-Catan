@@ -48,7 +48,7 @@ type GamePiece = Settlement;
 
 type HexPoints = [paper.Point, paper.Point, paper.Point, paper.Point, paper.Point, paper.Point];
 
-type GameMode = "add_settlement" | "standby";
+type GameMode = "add_settlement" | "add_road" | "standby";
 
 interface PlayerData {
     name: string;
@@ -63,6 +63,7 @@ interface PlayerData {
 	settlements: number;
     ships: number;
     canBuySettlement: boolean;
+    canBuyRoad: boolean;
 }
 
 interface GameSessionContextData {

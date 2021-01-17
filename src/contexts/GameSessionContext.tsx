@@ -22,13 +22,15 @@ export const GameSessionContextProvider: React.FC = ({ children }) => {
 		roads: 0,
 		settlements: 0,
 		ships: 0,
-		canBuySettlement: false
+        canBuySettlement: false,
+        canBuyRoad: false
 	});
 
 	/**
      * Initialize the game session.
+     * @returns {void}
      */
-	function initGameSession() {
+	function initGameSession(): void {
 		if (gameSession === null) {
 			// TODO: instead of changing the game session, just call gameSession.init()
 			const stateSetters = { setGameState, setPlayerData };
@@ -44,7 +46,9 @@ export const GameSessionContextProvider: React.FC = ({ children }) => {
 	 * @param {GameMode} mode New mode to set.
 	 * @returns {void}
 	 */
-	const setGameMode = (mode: GameMode) => gameSession && gameSession.setMode(mode);
+	function setGameMode(mode: GameMode): void {
+		if (gameSession) gameSession.setMode(mode);
+	}
 
 	return (
 		<GameSessionContext.Provider value={{ playerData, gameState, setGameMode }}>

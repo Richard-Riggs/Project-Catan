@@ -1,5 +1,6 @@
 import GameSession from './GameSession';
 import Player from './Player';
+import RoadPath from './RoadPath';
 import Vertex from './Vertex';
 
 export default class GameEventHandler {
@@ -40,6 +41,23 @@ export default class GameEventHandler {
             default:
                 vertex.removeHoverPiece();
                 break;
+        }
+    }
+
+    handleRoadPathMouseEnter(roadPath: RoadPath) {
+        switch (this._gameSession.mode) {
+            case 'add_road':
+                roadPath.addHoverPiece();
+                break;
+            default:
+                break;
+        }
+    }
+
+    handleRoadPathMouseLeave(roadPath: RoadPath) {
+        switch (this._gameSession.mode) {
+            default:
+                roadPath.removeHoverPiece();
         }
     }
 }

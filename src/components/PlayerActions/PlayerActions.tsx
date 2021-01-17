@@ -11,7 +11,7 @@ export default function PlayerActions() {
         <div className="PlayerActions">
             <h1>Player Actions</h1>
             <div className="PlayerActions__buttons">
-                <GameButton name="Buy Road" enabled={true} onClick={() => {}} />
+                <GameButton name="Buy Road" enabled={playerData.canBuyRoad} onClick={() => setGameMode('add_road')} />
                 <GameButton name="Buy Settlement" enabled={playerData.canBuySettlement} onClick={() => setGameMode('add_settlement')} />
                 <GameButton name="Upgrade Settlement" enabled={true} onClick={() => {}} />
                 <GameButton name="Trade" enabled={true} onClick={() => {}} />
