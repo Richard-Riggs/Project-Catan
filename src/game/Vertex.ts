@@ -89,7 +89,7 @@ export default class Vertex {
     }
 
     addSettlement() {
-        if (this.piece && !this.piece.built) this.piece.path.remove();
+        if (this.piece && !this.piece.built) this.piece.remove();
         this.piece = new Settlement(this.tileRadius / 4, this.center);
     }
 

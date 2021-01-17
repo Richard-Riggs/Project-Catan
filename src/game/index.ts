@@ -18,13 +18,5 @@ export function initGame(stateSetters: StateSetters) {
         hexSize: 50,
     }
 
-    // stateSetters.setPlayerData({
-    //     ore: 1,
-    //     wheat: 1,
-    //     wood: 1,
-    //     brick: 2,
-    //     sheep: 4
-    // });
-
     return new GameSession(settings, stateSetters);
 }

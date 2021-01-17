@@ -36,6 +36,7 @@ export class RoadPiece {
         this._path.add(vertices[1].center);
         this._path.strokeColor = color;
         this._path.locked = true;
+        this._path.scale(0.9);
     }
 
     remove() {

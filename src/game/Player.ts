@@ -14,16 +14,16 @@ export default class Player {
     constructor(iName: string) {
         // TODO: add configurable default values
         this.name = iName;
-        this.wood = 1;
-        this.sheep = 1;
-        this.wheat = 1;
-        this.ore = 1;
-        this.brick = 1;
-        this.devCards = 1;
-        this.roads = 1;
-        this.ships = 1;
-        this.settlements = 1;
-        this.cities = 1;
+        this.wood = 3;
+        this.sheep = 3;
+        this.wheat = 3;
+        this.ore = 3;
+        this.brick = 3;
+        this.devCards = 3;
+        this.roads = 3;
+        this.ships = 3;
+        this.settlements = 3;
+        this.cities = 3;
     }
 
     get totalResources(): number {
@@ -55,6 +55,7 @@ export default class Player {
     buyRoad(): void {
         this.wood--;
         this.ore--;
+        this.roads--;
     }
 
     canBuyShip(): boolean {

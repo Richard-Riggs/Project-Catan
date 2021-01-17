@@ -60,4 +60,18 @@ export default class GameEventHandler {
                 roadPath.removeHoverPiece();
         }
     }
+
+    handleRoadPathClick(roadPath: RoadPath) {
+        switch (this._gameSession.mode) {
+            case 'add_road':
+                if (roadPath.canAddPiece() && this._player.canBuyRoad()) {
+                    this._player.buyRoad();
+                    roadPath.addRoadPiece();
+                    this._gameSession.setMode('standby');
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
