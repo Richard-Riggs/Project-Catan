@@ -1,4 +1,5 @@
 import * as paper from 'paper';
+import { GameSettings, StateSetters } from '../types/game';
 import GameSession from './GameSession';
 
 export function initGame(stateSetters: StateSetters) {

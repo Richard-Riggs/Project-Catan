@@ -1,4 +1,5 @@
 import * as paper from 'paper';
+import { TileColors } from '../types/game';
 
 export default class Hexagon {
     colors: TileColors;

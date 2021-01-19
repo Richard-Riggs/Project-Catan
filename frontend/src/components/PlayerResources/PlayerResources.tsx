@@ -9,7 +9,7 @@ export default function PlayerResources() {
     const { gameState, playerData } = gameContext;
     return (
         <div className="PlayerResources">
-            <h1 className="PlayerResources__header">Player Resources ({gameState.mode})</h1>
+            <h1 className="PlayerResources__header">Player Resources ({gameState.mode})({gameState.lastRolled})</h1>
             <div className="PlayerResources__info-pane">
                 <div className="PlayerResources__column">
                     <ResourceItem name="Wood" count={ playerData.wood } />

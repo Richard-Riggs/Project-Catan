@@ -1,4 +1,5 @@
 import * as paper from 'paper';
+import { GameSettings, TileGridUpdate } from '../types/game';
 import Tile from './Tile';
 
 type TileArray = Array<Array<Tile>>;

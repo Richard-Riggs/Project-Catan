@@ -1,3 +1,4 @@
+import { VerticeArray, HexPoints } from '../types/game';
 import GameEventHandler from './GameEventHandler';
 import TileGrid from './TileGrid';
 import Vertex from './Vertex';
@@ -84,5 +85,9 @@ export default class VertexMap {
             }
             this.locked = true;
         }
+    }
+
+    getVertexById(id: string): Vertex | undefined {
+        return this.vertices.flat().find(v => v.id === id);
     }
 }

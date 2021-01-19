@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import GameSession from '../game/GameSession';
 import { initGame } from '../game/index';
+import { GameEvent, GameMode, GameSessionContextData, GameState, PlayerData } from '../types/game';
 
 
 /**
@@ -9,7 +10,10 @@ import { initGame } from '../game/index';
 export const GameSessionContext = createContext<GameSessionContextData | null>(null);
 export const GameSessionContextProvider: React.FC = ({ children }) => {
 	const [ gameSession, setGameSession ] = useState<GameSession | null>(null);
-	const [ gameState, setGameState ] = useState<GameState>({mode: 'standby'});
+	const [ gameState, setGameState ] = useState<GameState>({
+        mode: 'standby',
+        lastRolled: 0
+    });
 	const [ playerData, setPlayerData ] = useState<PlayerData>({
 		name: '',
 		brick: 0,
@@ -22,8 +26,8 @@ export const GameSessionContextProvider: React.FC = ({ children }) => {
 		roads: 0,
 		settlements: 0,
 		ships: 0,
-        canBuySettlement: false,
-        canBuyRoad: false
+		canBuySettlement: false,
+		canBuyRoad: false
 	});
 
 	/**
@@ -47,11 +51,15 @@ export const GameSessionContextProvider: React.FC = ({ children }) => {
 	 * @returns {void}
 	 */
 	function setGameMode(mode: GameMode): void {
-		if (gameSession) gameSession.setMode(mode);
-	}
+		if (gameSession) gameSession.updater.setMode(mode);
+    }
+    
+    function triggerEvent(event: GameEvent): void {
+        if (gameSession) gameSession.eventHandler.triggerGameEvent(event);
+    }
 
 	return (
-		<GameSessionContext.Provider value={{ playerData, gameState, setGameMode }}>
+		<GameSessionContext.Provider value={{ playerData, gameState, setGameMode, triggerEvent }}>
 			{children}
 		</GameSessionContext.Provider>
 	);

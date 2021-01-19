@@ -12,7 +12,6 @@ export default class RoadPathSet {
         this._eventHandler = eventHandler;
         this.roads = this.generateRoads(vertexMap);
         this.locked = true;
-        debugger;
     }
 
     generateRoads(vertexMap: VertexMap): Array<RoadPath> {
@@ -22,7 +21,6 @@ export default class RoadPathSet {
                 for (const adjVertex of vertex.adjacentVertices) {
                     const roadId = RoadPath.createId(vertex, adjVertex);
                     if (!roads.find(r => r.id === roadId)) {
-                        debugger;
                         roads.push(new RoadPath(vertex, adjVertex, this._eventHandler));
                     }
                 }
@@ -54,5 +52,9 @@ export default class RoadPathSet {
             }
             this.locked = true;
         }
+    }
+
+    getRoadPathById(id: string): RoadPath | undefined {
+        return this.roads.find(r => r.id === id);
     }
 }

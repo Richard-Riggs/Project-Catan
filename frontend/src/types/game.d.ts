@@ -1,5 +1,7 @@
 // // https://medium.com/jspoint/typescript-type-declaration-files-4b29077c43
 
+import RoadPath from "../game/RoadPath";
+
 // import Tile from "../../classes/Tile";
 
 interface GameSettings {
@@ -50,6 +52,32 @@ type HexPoints = [paper.Point, paper.Point, paper.Point, paper.Point, paper.Poin
 
 type GameMode = "add_settlement" | "add_road" | "standby";
 
+type GameEvent = "roll_dice" | "add_road" | "add_settlement";
+
+type EventUpdate = DiceRollUpdate | AddRoadUpdate | AddSettlmentUpdate;
+
+interface DiceRollUpdate {
+    type: "roll_dice";
+    value: number;
+}
+
+interface AddRoadUpdate {
+    type: "add_road";
+    value: string;
+}
+
+interface AddSettlmentUpdate {
+    type: "add_settlement";
+    value: string;
+}
+
+
+interface GameUpdate {
+    playerId: string;
+    data: EventUpdate;
+}
+
+
 interface PlayerData {
     name: string;
 	brick: number;
@@ -69,9 +97,11 @@ interface PlayerData {
 interface GameSessionContextData {
 	playerData: PlayerData,
 	gameState: GameState,
-	setGameMode: (mode: GameMode) => void;
+    setGameMode: (mode: GameMode) => void;
+    triggerEvent: (event: GameEvent) => void;
 }
 
 interface GameState {
-	mode: GameMode;
+    mode: GameMode;
+    lastRolled: number;
 }

@@ -1,3 +1,5 @@
+import { GameEvent } from '../types/game';
+import GameBoard from './GameBoard';
 import GameSession from './GameSession';
 import Player from './Player';
 import RoadPath from './RoadPath';
@@ -12,13 +14,29 @@ export default class GameEventHandler {
         this._player = gameSession.player;
     }
 
+    triggerGameEvent(event: GameEvent, objectId: string = "") {
+        switch (event) {
+            case 'roll_dice':
+                const rollVal = GameBoard.rollDice();
+                this._gameSession.updater.dispatchUpdateFromEvent({
+                    type: event,
+                    value: rollVal
+                });
+                break;
+            default:
+                this._gameSession.updater.dispatchUpdateFromEvent({
+                    type: event,
+                    value: objectId
+                });
+                break;
+        }
+    }
+
     handleVertexClick(vertex: Vertex) {
-        switch (this._gameSession.mode) {
+        switch (this._gameSession.mode) { // TODO: Player mode? 
             case 'add_settlement':
                 if (vertex.canAddPiece() && this._player.canBuySettlement()) {
-                    this._player.buySettlement();
-                    vertex.addSettlement();
-                    this._gameSession.setMode('standby');
+                    this.triggerGameEvent('add_settlement', vertex.id);
                 }
                 break;
             default:
@@ -65,9 +83,7 @@ export default class GameEventHandler {
         switch (this._gameSession.mode) {
             case 'add_road':
                 if (roadPath.canAddPiece() && this._player.canBuyRoad()) {
-                    this._player.buyRoad();
-                    roadPath.addRoadPiece();
-                    this._gameSession.setMode('standby');
+                    this.triggerGameEvent('add_road', roadPath.id);
                 }
                 break;
             default:
