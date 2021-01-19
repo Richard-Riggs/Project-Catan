@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Project-Catan backend",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "start": "nodemon ./src/index.ts",
+    "start": "nodemon ./src/server.ts",
     "build": "tsc --project ./"
   },
   "author": "",
