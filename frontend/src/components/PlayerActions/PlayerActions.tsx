@@ -2,8 +2,11 @@ import { useContext } from 'react';
 import './PlayerActions.css';
 import GameButton from '../GameButton';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
+import { useDispatch } from 'react-redux';
+import { incrementWood } from '../../redux/catanSlice';
 
 export default function PlayerActions() {
+    const dispatch = useDispatch();
     const gameContext = useContext(GameSessionContext);
     if (!gameContext) return <div className="PlayerActions" />
     const { setGameMode, playerData, triggerEvent } = gameContext;
@@ -17,6 +20,7 @@ export default function PlayerActions() {
                 <GameButton name="Trade" enabled={true} onClick={() => {}} />
                 <GameButton name="Buy Development Card" enabled={true} onClick={() => {}} />
                 <GameButton name="Roll Dice" enabled={true} onClick={() => triggerEvent('roll_dice')} />
+                <GameButton name="Increment Wood" enabled={true} onClick={() => dispatch(incrementWood())} />
             </div>
         </div>
     )

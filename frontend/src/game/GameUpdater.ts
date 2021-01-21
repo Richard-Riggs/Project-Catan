@@ -29,6 +29,10 @@ export default class GameUpdater {
         this.dispatchUpdate(update);
     }
 
+    // TODO: Attempt to implement React Redux
+    // see https://redux.js.org/faq/code-structure#where-should-websockets-and-other-persistent-connections-live
+    // see https://github.com/PlatziDev/socket.io-redux
+
     handleUpdate(update: GameUpdate) {
         switch (update.data.type) {
             case 'roll_dice':

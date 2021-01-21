@@ -2,9 +2,21 @@ import { useContext } from 'react';
 import './PlayerResources.css';
 import ResourceItem from '../ResourceItem';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
+import { useSelector } from 'react-redux';
+
+interface ReduxState {
+    catan: PlayerState
+}
+
+interface PlayerState {
+    wood: number
+};
+
+const selectWood = (state: ReduxState) => state.catan.wood;
 
 export default function PlayerResources() {
     const gameContext = useContext(GameSessionContext);
+    const reduxWood = useSelector(selectWood);
     if (!gameContext) return <div className="PlayerResources" />;
     const { gameState, playerData } = gameContext;
     return (
@@ -24,6 +36,9 @@ export default function PlayerResources() {
                     <ResourceItem name="Roads" count={playerData.roads} />
                     <ResourceItem name="Ships" count={playerData.ships} />
                     <ResourceItem name="Dev Cards" count={playerData.devCards} />
+                </div>
+                <div className="PlayerResources__column">
+                    <ResourceItem name="Redux-wood" count={reduxWood} />
                 </div>
             </div>
         </div>
