@@ -77,7 +77,6 @@ interface GameUpdate {
     data: EventUpdate;
 }
 
-
 interface PlayerData {
     name: string;
 	brick: number;
@@ -102,6 +101,7 @@ interface GameSessionContextData {
 }
 
 interface GameState {
-    mode: GameMode;
-    lastRolled: number;
-}
+    mode: GameMode,
+    lastRolled: number,
+    player: PlayerData
+};

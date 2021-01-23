@@ -3,16 +3,13 @@ import './PlayerResources.css';
 import ResourceItem from '../ResourceItem';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
 import { useSelector } from 'react-redux';
+import { GameState } from '../../types/game';
 
 interface ReduxState {
-    catan: PlayerState
+    game: GameState
 }
 
-interface PlayerState {
-    wood: number
-};
-
-const selectWood = (state: ReduxState) => state.catan.wood;
+const selectWood = (state: ReduxState) => state.game.player.wood;
 
 export default function PlayerResources() {
     const gameContext = useContext(GameSessionContext);

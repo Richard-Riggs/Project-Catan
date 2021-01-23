@@ -3,7 +3,7 @@ import './PlayerActions.css';
 import GameButton from '../GameButton';
 import { GameSessionContext } from '../../contexts/GameSessionContext';
 import { useDispatch } from 'react-redux';
-import { incrementWood } from '../../redux/catanSlice';
+import { incrementWood } from '../../redux/gameSlice';
 
 export default function PlayerActions() {
     const dispatch = useDispatch();

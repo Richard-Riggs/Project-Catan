@@ -45,7 +45,7 @@ export default class GameUpdater {
                 if (vertex) {
                     vertex.addSettlement();
                     this._player.buySettlement(vertex);
-                    this._gameSession.updater.setMode('standby');
+                    this.setMode('standby');
                 }
                 break;
             case 'add_road':
@@ -53,7 +53,7 @@ export default class GameUpdater {
                 if (road) {
                     road.addRoadPiece();
                     this._player.buyRoad(road);
-                    this._gameSession.updater.setMode('standby');
+                    this.setMode('standby');
                 }
                 break;
             default:

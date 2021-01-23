@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import catanReducer from './catanSlice';
+import gameReducer from './gameSlice';
 
 export default configureStore({
     reducer: {
-        catan: catanReducer
+        game: gameReducer
     }
 });
