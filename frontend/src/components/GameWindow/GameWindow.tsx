@@ -1,6 +1,6 @@
 import Game from '../Game';
 import GameLobby from '../GameLobby';
-import { GameSessionContextProvider } from '../../contexts/GameSessionContext';
+// import { GameSessionContextProvider } from '../../contexts/GameSessionContext';
 import { useState } from 'react';
 
 type GameStage = "lobby" | "game";
@@ -13,9 +13,7 @@ export default function GameWindow() {
                 <GameLobby />
             )}
             {stage === 'game' && (
-                <GameSessionContextProvider>
-                    <Game />
-                </GameSessionContextProvider>
+                <Game />
             )}
         </div>
     )

@@ -1,17 +1,21 @@
-import { EventUpdate, GameMode, GameState, GameUpdate, PlayerData, StateSetters } from "../types/game";
+import { MiddlewareAPI } from "@reduxjs/toolkit";
+import { EventUpdate, GameMode, GameState, GameUpdate, PlayerData } from "../types/game";
 import GameBoard from "./GameBoard";
 import GameSession from "./GameSession";
 import Player from "./Player";
+import { setPlayerData, setGameState } from '../redux/gameSlice';
 
 export default class GameUpdater {
     private _gameSession: GameSession;
     private _player: Player;
-    private _stateSetters: StateSetters;
+    // private _stateSetters: StateSetters;
+    private _store: MiddlewareAPI;
     private _gameBoard: GameBoard;
 
-    constructor(gameSession: GameSession, stateSetters: StateSetters) {
+    constructor(gameSession: GameSession, store: MiddlewareAPI) {
         this._gameSession = gameSession;
-        this._stateSetters = stateSetters;
+        // this._stateSetters = stateSetters;
+        this._store = store;
         this._player = this._gameSession.player;
         this._gameBoard = this._gameSession.gameBoard;
     }
@@ -85,7 +89,8 @@ export default class GameUpdater {
 
     updatePlayerDataState() {
         const playerData: PlayerData = this._player.getAllData();
-        this._stateSetters.setPlayerData(playerData);
+        // this._stateSetters.setPlayerData(playerData);
+        this._store.dispatch(setPlayerData(playerData));
     }
 
     updateGameSessionState() {
@@ -93,6 +98,7 @@ export default class GameUpdater {
             mode: this._gameSession.mode,
             lastRolled: this._gameSession.lastRolled
         };
-        this._stateSetters.setGameState(gameState);
+        // this._stateSetters.setGameState(gameState);
+        this._store.dispatch(setGameState(gameState));
     }
 }

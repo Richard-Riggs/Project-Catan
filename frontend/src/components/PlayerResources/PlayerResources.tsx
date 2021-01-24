@@ -1,21 +1,26 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import './PlayerResources.css';
 import ResourceItem from '../ResourceItem';
-import { GameSessionContext } from '../../contexts/GameSessionContext';
+// import { GameSessionContext } from '../../contexts/GameSessionContext';
 import { useSelector } from 'react-redux';
-import { GameState } from '../../types/game';
+import { GameState2 } from '../../types/game';
 
 interface ReduxState {
-    game: GameState
+    game: GameState2
 }
 
-const selectWood = (state: ReduxState) => state.game.player.wood;
+// TODO: selectors file?
+const selectPlayerData = (state: ReduxState) => state.game.player;
+const selectGameState = (state: ReduxState) => {
+    return { mode: state.game.mode, lastRolled: state.game.lastRolled }
+}
 
 export default function PlayerResources() {
-    const gameContext = useContext(GameSessionContext);
-    const reduxWood = useSelector(selectWood);
-    if (!gameContext) return <div className="PlayerResources" />;
-    const { gameState, playerData } = gameContext;
+    // const gameContext = useContext(GameSessionContext);
+    const playerData = useSelector(selectPlayerData);
+    const gameState = useSelector(selectGameState);
+    // if (!gameContext) return <div className="PlayerResources" />;
+    // const { gameState, playerData } = gameContext;
     return (
         <div className="PlayerResources">
             <h1 className="PlayerResources__header">Player Resources ({gameState.mode})({gameState.lastRolled})</h1>
@@ -35,7 +40,7 @@ export default function PlayerResources() {
                     <ResourceItem name="Dev Cards" count={playerData.devCards} />
                 </div>
                 <div className="PlayerResources__column">
-                    <ResourceItem name="Redux-wood" count={reduxWood} />
+                    <ResourceItem name="Redux-wood" count={0} />
                 </div>
             </div>
         </div>

@@ -102,6 +102,11 @@ interface GameSessionContextData {
 
 interface GameState {
     mode: GameMode,
+    lastRolled: number
+};
+
+interface GameState2 {
+    mode: GameMode,
     lastRolled: number,
     player: PlayerData
 };

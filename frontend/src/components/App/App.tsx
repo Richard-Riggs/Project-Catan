@@ -7,12 +7,8 @@ export default function App() {
     return (
         <div className="App">
             <Switch>
-                <Route path="/game">
-                    <GameWindow />
-                </Route>
-                <Route path="/">
-                    <HomePage />
-                </Route>
+                <Route path="/game" component={GameWindow} />
+                <Route path="/" component={HomePage} />
             </Switch>
         </div>
     );
