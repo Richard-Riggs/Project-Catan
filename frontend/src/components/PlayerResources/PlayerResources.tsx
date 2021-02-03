@@ -3,10 +3,10 @@ import './PlayerResources.css';
 import ResourceItem from '../ResourceItem';
 // import { GameSessionContext } from '../../contexts/GameSessionContext';
 import { useSelector } from 'react-redux';
-import { GameState2 } from '../../types/game';
+import { GameState } from '../../types/game';
 
 interface ReduxState {
-    game: GameState2
+    game: GameState
 }
 
 // TODO: selectors file?

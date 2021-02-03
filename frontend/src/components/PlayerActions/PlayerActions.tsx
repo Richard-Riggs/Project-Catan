@@ -4,10 +4,10 @@ import GameButton from '../GameButton';
 // import { GameSessionContext } from '../../contexts/GameSessionContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementWood, setMode, rollDice } from '../../redux/gameSlice';
-import { GameState2 } from '../../types/game';
+import { GameState } from '../../types/game';
 
 interface ReduxState {
-    game: GameState2
+    game: GameState
 }
 
 const selectPlayerData = (state: ReduxState) => state.game.player;

@@ -100,13 +100,24 @@ interface GameSessionContextData {
     triggerEvent: (event: GameEvent) => void;
 }
 
-interface GameState {
+interface GameData {
     mode: GameMode,
     lastRolled: number
 };
 
-interface GameState2 {
+interface GameState {
     mode: GameMode,
     lastRolled: number,
     player: PlayerData
 };
+
+interface ReduxState {
+    game: GameState
+}
+
+// Enable resize attribute on canvas element
+declare module 'react' {
+    interface HTMLAttributes<T> {
+        resize?: any;
+    }
+}

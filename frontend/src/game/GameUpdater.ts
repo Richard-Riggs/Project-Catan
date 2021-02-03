@@ -1,5 +1,5 @@
 import { MiddlewareAPI } from "@reduxjs/toolkit";
-import { EventUpdate, GameMode, GameState, GameUpdate, PlayerData } from "../types/game";
+import { EventUpdate, GameMode, GameData, GameUpdate, PlayerData } from "../types/game";
 import GameBoard from "./GameBoard";
 import GameSession from "./GameSession";
 import Player from "./Player";
@@ -72,6 +72,7 @@ export default class GameUpdater {
      * @returns {void}
      */
     setMode(mode: GameMode): void {
+        console.log('here: ', mode);
         this._gameSession.mode = mode;
         this._gameSession.gameBoard.switchBoardMode(mode);
         this.updateUIContext();
@@ -94,7 +95,7 @@ export default class GameUpdater {
     }
 
     updateGameSessionState() {
-        const gameState: GameState = {
+        const gameState: GameData = {
             mode: this._gameSession.mode,
             lastRolled: this._gameSession.lastRolled
         };

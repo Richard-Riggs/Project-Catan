@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { GameMode, PlayerData } from '../types/game';
 
-interface GameState2 {
+interface GameState {
     mode: GameMode,
     lastRolled: number,
     player: PlayerData
 };
 
-const initialGameState: GameState2 = {
+const initialGameState: GameState = {
     mode: 'standby',
     lastRolled: 0,
     player: {
@@ -31,18 +31,18 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState: initialGameState,
     reducers: {
-        setWood: (state: GameState2, action) => {
+        setWood: (state: GameState, action) => {
             state.player.wood = action.payload;
         },
-        incrementWood: (state: GameState2) => {
+        incrementWood: (state: GameState) => {
             state.player.wood++;
         },
-        setPlayerData: (state: GameState2, action) => {
+        setPlayerData: (state: GameState, action) => {
             state.player = action.payload;
         },
-        setGameState: (state: GameState2, action) => {
+        setGameState: (state: GameState, action) => {
             state.mode = action.payload.mode;
-            state.lastRolled = action.payload.mode;
+            state.lastRolled = action.payload.lastRolled;
         }
     }
 });
@@ -51,19 +51,19 @@ export const gameSlice = createSlice({
 export const { setWood, incrementWood, setPlayerData, setGameState } = gameSlice.actions;
 
 export const initGame = () => {
-    return { type: 'init_game' }
+    return { type: 'game/init_game' }
 }
 
 export const endGame = () => {
-    return { type: 'end_game' }
+    return { type: 'game/end_game' }
 }
 
 export const setMode = (mode: string) => {
-    return { type: 'set_mode', payload: mode }
+    return { type: 'game/set_mode', payload: mode }
 }
 
 export const rollDice = () => {
-    return { type: 'roll_dice' }
+    return { type: 'game/roll_dice' }
 }
 
 export const gameActions = {
