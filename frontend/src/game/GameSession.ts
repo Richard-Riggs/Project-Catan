@@ -5,6 +5,7 @@ import GameUpdater from './GameUpdater';
 import { GameMode, GameSettings } from '../types/game';
 import * as paper from 'paper';
 import { MiddlewareAPI } from '@reduxjs/toolkit';
+import GameSocket from './GameSocket';
 
 /**
  * Top-level class for interfacing between the React GameSessionContext, the LiveSessionManager,
@@ -17,6 +18,7 @@ export default class GameSession {
     player: Player;
     eventHandler: GameEventHandler;
     lastRolled: number;
+    gameSocket: GameSocket;
 
     constructor(store: MiddlewareAPI) {
         console.log('initializing game');
@@ -44,6 +46,7 @@ export default class GameSession {
         this.lastRolled = 0;
         this.mode = 'standby';
         this.updater.setMode(this.mode);
+        this.gameSocket = new GameSocket(this.updater);
     }
 
 }
