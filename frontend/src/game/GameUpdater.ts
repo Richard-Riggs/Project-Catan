@@ -1,17 +1,21 @@
-import { EventUpdate, GameMode, GameState, GameUpdate, PlayerData, StateSetters } from "../types/game";
+import { MiddlewareAPI } from "@reduxjs/toolkit";
+import { EventUpdate, GameMode, GameData, GameUpdate, PlayerData } from "../types/game";
 import GameBoard from "./GameBoard";
 import GameSession from "./GameSession";
 import Player from "./Player";
+import { setPlayerData, setGameState } from '../redux/gameSlice';
 
 export default class GameUpdater {
     private _gameSession: GameSession;
     private _player: Player;
-    private _stateSetters: StateSetters;
+    // private _stateSetters: StateSetters;
+    private _store: MiddlewareAPI;
     private _gameBoard: GameBoard;
 
-    constructor(gameSession: GameSession, stateSetters: StateSetters) {
+    constructor(gameSession: GameSession, store: MiddlewareAPI) {
         this._gameSession = gameSession;
-        this._stateSetters = stateSetters;
+        // this._stateSetters = stateSetters;
+        this._store = store;
         this._player = this._gameSession.player;
         this._gameBoard = this._gameSession.gameBoard;
     }
@@ -29,6 +33,10 @@ export default class GameUpdater {
         this.dispatchUpdate(update);
     }
 
+    // TODO: Attempt to implement React Redux
+    // see https://redux.js.org/faq/code-structure#where-should-websockets-and-other-persistent-connections-live
+    // see https://github.com/PlatziDev/socket.io-redux
+
     handleUpdate(update: GameUpdate) {
         switch (update.data.type) {
             case 'roll_dice':
@@ -41,7 +49,7 @@ export default class GameUpdater {
                 if (vertex) {
                     vertex.addSettlement();
                     this._player.buySettlement(vertex);
-                    this._gameSession.updater.setMode('standby');
+                    this.setMode('standby');
                 }
                 break;
             case 'add_road':
@@ -49,7 +57,7 @@ export default class GameUpdater {
                 if (road) {
                     road.addRoadPiece();
                     this._player.buyRoad(road);
-                    this._gameSession.updater.setMode('standby');
+                    this.setMode('standby');
                 }
                 break;
             default:
@@ -64,6 +72,7 @@ export default class GameUpdater {
      * @returns {void}
      */
     setMode(mode: GameMode): void {
+        console.log('here: ', mode);
         this._gameSession.mode = mode;
         this._gameSession.gameBoard.switchBoardMode(mode);
         this.updateUIContext();
@@ -81,14 +90,16 @@ export default class GameUpdater {
 
     updatePlayerDataState() {
         const playerData: PlayerData = this._player.getAllData();
-        this._stateSetters.setPlayerData(playerData);
+        // this._stateSetters.setPlayerData(playerData);
+        this._store.dispatch(setPlayerData(playerData));
     }
 
     updateGameSessionState() {
-        const gameState: GameState = {
+        const gameState: GameData = {
             mode: this._gameSession.mode,
             lastRolled: this._gameSession.lastRolled
         };
-        this._stateSetters.setGameState(gameState);
+        // this._stateSetters.setGameState(gameState);
+        this._store.dispatch(setGameState(gameState));
     }
 }
