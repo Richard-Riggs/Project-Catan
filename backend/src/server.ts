@@ -1,11 +1,8 @@
-const app = require('express')();
-// const server = require('http').createServer(app);
-const options = { 
-    cors: {
-        origin: 'http://localhost:3000',
-        methods: ['GET', 'POST']
-    }
- };
+import express from 'express';
+import SocketIO from 'socket.io';
+
+const app = express();
+
 
 // TODO: send app file
 // use this project structure: https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way
@@ -19,15 +16,19 @@ const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-const io = require('socket.io')(server, options);
 
+// SOCKET IO
+const options = { 
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST']
+    },
+    path: '/socket'
+ };
 
+const io = new SocketIO.Server(server, options);
+const game = io.of('/game');
 
-io.on('connection', (socket: SocketIO.Socket) => {
+game.on('connection', (socket: SocketIO.Socket) => {
     console.log('a user connected');
 });
-
-
-
-
-// const io = require('socket.io').listen(server);

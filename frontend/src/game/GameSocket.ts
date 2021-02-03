@@ -7,7 +7,9 @@ export default class GameSocket {
 
     constructor(updater: GameUpdater) {
         this._updater = updater;
-        this._socket = io('http://localhost:8000');
+        this._socket = io('/game', {
+            path: '/socket'
+        });
         console.log(typeof this._socket.id);
         console.log(typeof this._updater);
     }

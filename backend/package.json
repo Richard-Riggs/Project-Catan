@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "start": "nodemon ./src/server.ts",
-    "build": "tsc --project ./"
+    "build": "tsc --project ./",
+    "debug": "nodemon --inspect=9229 -e ts,tsx --exec node -r ts-node/register ./src/server.ts"
   },
   "author": "",
   "license": "ISC",
