@@ -2,7 +2,6 @@ import GameEventHandler from './GameEventHandler';
 import TileGrid from './TileGrid';
 import VertexMap from './VertexMap';
 import { generateTileData } from './tileData';
-import GameSession from './GameSession';
 import RoadPathSet from './RoadPathSet';
 import { GameMode, GameSettings } from '../types/game';
 
@@ -12,8 +11,8 @@ export default class GameBoard {
     vertexMap: VertexMap;
     roadPathSet: RoadPathSet;
 
-    constructor(gameSession: GameSession, settings: GameSettings ) {
-        this._eventHandler = gameSession.eventHandler;
+    constructor(eventHandler: GameEventHandler, settings: GameSettings ) {
+        this._eventHandler = eventHandler;
         this.tileGrid = new TileGrid(settings);
         const tileData = generateTileData(this.tileGrid.tiles);
         this.tileGrid.populateBoard(tileData);

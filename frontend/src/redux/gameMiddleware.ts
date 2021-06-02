@@ -13,9 +13,15 @@ export const scopedSessionMiddleware = () => {
     const middleware: Middleware = store => next => action => {
         switch (action.type) {
 
-            case 'game/init_game':
+            case 'game/init_session':
                 if (!game) {
                     game = new GameSession(store);
+                }
+                break;
+
+            case 'game/start_game':
+                if (game) {
+                    game.setupGame();
                 }
                 break;
 
@@ -27,7 +33,7 @@ export const scopedSessionMiddleware = () => {
             
             case 'game/roll_dice':
                 if (game) {
-                    game.eventHandler.triggerGameEvent('roll_dice');
+                    game.updater.rollDice();
                 }
                 break;
 

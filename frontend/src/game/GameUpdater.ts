@@ -1,23 +1,32 @@
 import { MiddlewareAPI } from "@reduxjs/toolkit";
 import { EventUpdate, GameMode, GameData, GameUpdate, PlayerData } from "../types/game";
-import GameBoard from "./GameBoard";
 import GameSession from "./GameSession";
-import Player from "./Player";
 import { setPlayerData, setGameState } from '../redux/gameSlice';
+import Game from "./Game";
 
 export default class GameUpdater {
     private _gameSession: GameSession;
-    private _player: Player;
-    // private _stateSetters: StateSetters;
     private _store: MiddlewareAPI;
-    private _gameBoard: GameBoard;
+    private _game: Game | null;
 
     constructor(gameSession: GameSession, store: MiddlewareAPI) {
         this._gameSession = gameSession;
-        // this._stateSetters = stateSetters;
         this._store = store;
-        this._player = this._gameSession.player;
-        this._gameBoard = this._gameSession.gameBoard;
+        this._game = null;
+    }
+
+    // TODO: remove & replace with generic dispatch function
+    rollDice() {
+        if (!this._game) return;
+        this._game.eventHandler.triggerGameEvent('roll_dice');
+    }
+
+    setupGame() {
+        this._gameSession.setupGame();
+    }
+
+    useGame(game: Game) {
+        this._game = game;
     }
 
     dispatchUpdate(update: GameUpdate) {
@@ -26,8 +35,9 @@ export default class GameUpdater {
     }
 
     dispatchUpdateFromEvent(eventUpdate: EventUpdate) {
+        if (!this._game) return;
         const update: GameUpdate = {
-            playerId: this._player.id,
+            playerId: this._game.player.id,
             data: eventUpdate
         };
         this.dispatchUpdate(update);
@@ -38,25 +48,26 @@ export default class GameUpdater {
     // see https://github.com/PlatziDev/socket.io-redux
 
     handleUpdate(update: GameUpdate) {
+        if (!this._game) return;
         switch (update.data.type) {
             case 'roll_dice':
-                this._player.getResourcesFromDiceRoll(update.data.value);
-                this._gameSession.lastRolled = update.data.value;
+                this._game.player.getResourcesFromDiceRoll(update.data.value);
+                this._game.lastRolled = update.data.value;
                 this.updateUIContext();
                 break;
             case 'add_settlement':
-                const vertex = this._gameBoard.vertexMap.getVertexById(update.data.value);
+                const vertex = this._game.gameBoard.vertexMap.getVertexById(update.data.value);
                 if (vertex) {
                     vertex.addSettlement();
-                    this._player.buySettlement(vertex);
+                    this._game.player.buySettlement(vertex);
                     this.setMode('standby');
                 }
                 break;
             case 'add_road':
-                const road = this._gameBoard.roadPathSet.getRoadPathById(update.data.value);
+                const road = this._game.gameBoard.roadPathSet.getRoadPathById(update.data.value);
                 if (road) {
                     road.addRoadPiece();
-                    this._player.buyRoad(road);
+                    this._game.player.buyRoad(road);
                     this.setMode('standby');
                 }
                 break;
@@ -72,9 +83,9 @@ export default class GameUpdater {
      * @returns {void}
      */
     setMode(mode: GameMode): void {
-        console.log('here: ', mode);
-        this._gameSession.mode = mode;
-        this._gameSession.gameBoard.switchBoardMode(mode);
+        if (!this._game) return;
+        this._game.mode = mode;
+        this._game.gameBoard.switchBoardMode(mode);
         this.updateUIContext();
     }
 
@@ -89,15 +100,17 @@ export default class GameUpdater {
     }
 
     updatePlayerDataState() {
-        const playerData: PlayerData = this._player.getAllData();
+        if (!this._game) return;
+        const playerData: PlayerData = this._game.player.getAllData();
         // this._stateSetters.setPlayerData(playerData);
         this._store.dispatch(setPlayerData(playerData));
     }
 
     updateGameSessionState() {
+        if (!this._game) return;
         const gameState: GameData = {
-            mode: this._gameSession.mode,
-            lastRolled: this._gameSession.lastRolled
+            mode: this._game.mode,
+            lastRolled: this._game.lastRolled
         };
         // this._stateSetters.setGameState(gameState);
         this._store.dispatch(setGameState(gameState));

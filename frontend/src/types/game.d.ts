@@ -105,11 +105,16 @@ interface GameData {
     lastRolled: number
 };
 
+
+type SessionStage = "lobby" | "game";
+
 interface GameState {
+    sessionStage: SessionStage,
     mode: GameMode,
     lastRolled: number,
     player: PlayerData
 };
+
 
 interface ReduxState {
     game: GameState

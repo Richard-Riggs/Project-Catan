@@ -1,0 +1,2 @@
+join lobby -> init_session
+click 'Start Game' -> broadcast 'start_game' with settings (enter 'loading' mode) -> generate board data -> emit 'load_game' with board data

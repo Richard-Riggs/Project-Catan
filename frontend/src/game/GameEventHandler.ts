@@ -1,30 +1,31 @@
 import { GameEvent } from '../types/game';
+import Game from './Game';
 import GameBoard from './GameBoard';
-import GameSession from './GameSession';
 import Player from './Player';
 import RoadPath from './RoadPath';
 import Vertex from './Vertex';
 
 export default class GameEventHandler {
-    private _gameSession: GameSession;
+    private _game: Game;
     private _player: Player;
 
-    constructor(gameSession: GameSession) {
-        this._gameSession = gameSession;
-        this._player = gameSession.player;
+    constructor(game: Game) {
+        this._game = game;
+        this._player = game.player;
     }
 
+    // TODO: move logic to gameupdater, use dispatch instead
     triggerGameEvent(event: GameEvent, objectId: string = "") {
         switch (event) {
             case 'roll_dice':
                 const rollVal = GameBoard.rollDice();
-                this._gameSession.updater.dispatchUpdateFromEvent({
+                this._game.updater.dispatchUpdateFromEvent({
                     type: event,
                     value: rollVal
                 });
                 break;
             default:
-                this._gameSession.updater.dispatchUpdateFromEvent({
+                this._game.updater.dispatchUpdateFromEvent({
                     type: event,
                     value: objectId
                 });
@@ -33,7 +34,7 @@ export default class GameEventHandler {
     }
 
     handleVertexClick(vertex: Vertex) {
-        switch (this._gameSession.mode) { // TODO: Player mode? 
+        switch (this._game.mode) { // TODO: Player mode? 
             case 'add_settlement':
                 if (vertex.canAddPiece() && this._player.canBuySettlement()) {
                     this.triggerGameEvent('add_settlement', vertex.id);
@@ -45,7 +46,7 @@ export default class GameEventHandler {
     }
 
     handleVertexMouseEnter(vertex: Vertex) {
-        switch (this._gameSession.mode) {
+        switch (this._game.mode) {
             case 'add_settlement':
                 vertex.addHoverPiece();
                 break;
@@ -55,7 +56,7 @@ export default class GameEventHandler {
     }
 
     handleVertexMouseLeave(vertex: Vertex) {
-        switch (this._gameSession.mode) {
+        switch (this._game.mode) {
             default:
                 vertex.removeHoverPiece();
                 break;
@@ -63,7 +64,7 @@ export default class GameEventHandler {
     }
 
     handleRoadPathMouseEnter(roadPath: RoadPath) {
-        switch (this._gameSession.mode) {
+        switch (this._game.mode) {
             case 'add_road':
                 roadPath.addHoverPiece();
                 break;
@@ -73,14 +74,14 @@ export default class GameEventHandler {
     }
 
     handleRoadPathMouseLeave(roadPath: RoadPath) {
-        switch (this._gameSession.mode) {
+        switch (this._game.mode) {
             default:
                 roadPath.removeHoverPiece();
         }
     }
 
     handleRoadPathClick(roadPath: RoadPath) {
-        switch (this._gameSession.mode) {
+        switch (this._game.mode) {
             case 'add_road':
                 if (roadPath.canAddPiece() && this._player.canBuyRoad()) {
                     this.triggerGameEvent('add_road', roadPath.id);

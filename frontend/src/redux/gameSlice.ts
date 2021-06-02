@@ -1,13 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GameMode, PlayerData } from '../types/game';
-
-interface GameState {
-    mode: GameMode,
-    lastRolled: number,
-    player: PlayerData
-};
+import { GameState } from '../types/game';
 
 const initialGameState: GameState = {
+    sessionStage: 'lobby',
     mode: 'standby',
     lastRolled: 0,
     player: {
@@ -43,15 +38,22 @@ export const gameSlice = createSlice({
         setGameState: (state: GameState, action) => {
             state.mode = action.payload.mode;
             state.lastRolled = action.payload.lastRolled;
+        },
+        setSessionStage: (state: GameState, action) => {
+            state.sessionStage = action.payload;
         }
     }
 });
 
 // TODO: gameActions file?
-export const { setWood, incrementWood, setPlayerData, setGameState } = gameSlice.actions;
+export const { setWood, incrementWood, setPlayerData, setGameState, setSessionStage } = gameSlice.actions;
 
-export const initGame = () => {
-    return { type: 'game/init_game' }
+export const initSession = () => {
+    return { type: 'game/init_session' }
+}
+
+export const startGame = () => {
+    return { type: 'game/start_game' }
 }
 
 export const endGame = () => {
@@ -67,12 +69,14 @@ export const rollDice = () => {
 }
 
 export const gameActions = {
-    initGame,
+    initSession,
+    startGame,
     endGame,
     setMode,
     rollDice,
     setWood: gameSlice.actions.setWood,
-    incrementWood: gameSlice.actions.incrementWood
+    incrementWood: gameSlice.actions.incrementWood,
+    setSessionStage: gameSlice.actions.setSessionStage
 }
 
 export default gameSlice.reducer;
